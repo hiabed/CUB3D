@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/27 19:20:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/27 20:31:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,29 +165,29 @@ void	draw_map(char **map, t_picture *test)
 
 int	give_key(int key, t_picture *test)
 {
-	if (key == 83)
+	if (key == 123)
 	{
 		test->r_left = 1;
         printf("r_left: %f\n", test->r_left);
 	}
-	if (key == 85)
+	if (key == 124)
 	{
 		test->r_right = 1;
         printf("r_left: %f\n", test->r_right);
 	}
-	if (key == 126)
+	if (key == 13) //w
 	{
 		test->m_up = 1;
 	}
-	if (key == 125)
+	if (key == 1) //s
 	{
 		test->m_down = 1;
 	}
-	if (key == 124)
+	if (key == 2) //d
 	{
 		test->m_left = 1;
 	}
-	if (key == 123)
+	if (key == 0)
 	{
 		test->m_right = 1;
 	}
@@ -215,25 +215,25 @@ int	animate_moves(t_picture *test)
 
 int	key_released(int key, t_picture *test)
 {
-	if (key == 83)
+	if (key == 123)
 	{
 		test->r_left = 0;
         printf("r_left: %f\n", test->r_left);
 	}
-	else if (key == 85)
+	else if (key == 124)
 	{
 		test->r_right = 0;
         printf("r_left: %f\n", test->r_right);
 	}
-    else if(key == 126)
+    else if(key == 13)
     {
 	    test->m_up = 0;
     }
-    else if(key == 125)
+    else if(key == 1)
 	    test->m_down = 0;
-    else if(key == 124)
+    else if(key == 2)
 	    test->m_left = 0;
-    else if(key == 123)
+    else if(key == 0)
 	    test->m_right = 0;
 	return (0);
 }
