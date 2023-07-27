@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/27 20:31:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/27 20:39:56 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,37 +166,22 @@ void	draw_map(char **map, t_picture *test)
 int	give_key(int key, t_picture *test)
 {
 	if (key == 123)
-	{
 		test->r_left = 1;
-        printf("r_left: %f\n", test->r_left);
-	}
 	if (key == 124)
-	{
 		test->r_right = 1;
-        printf("r_left: %f\n", test->r_right);
-	}
 	if (key == 13) //w
-	{
 		test->m_up = 1;
-	}
 	if (key == 1) //s
-	{
 		test->m_down = 1;
-	}
 	if (key == 2) //d
-	{
 		test->m_left = 1;
-	}
 	if (key == 0)
-	{
 		test->m_right = 1;
-	}
     if (key == 53) //esc
     {
         write(1, "thella ;)\n", 10);
         exit(0);
     }
-	// draw_map(test->map_v3, test);
 	return (0);
 }
 
@@ -238,19 +223,18 @@ int	key_released(int key, t_picture *test)
 	return (0);
 }
 
-int	main(int ac, char **av)
+t_picture *initialize_structure(int ac, char **av)
 {
-	int			i;
+	t_picture	*test;
 	int			fd;
 	char		*map_content;
-	t_picture	*test;
-
-	i = 0;
 	test = malloc(sizeof(t_picture));
+	if (ac != 2)
+		ft_perror();
 	if (!test)
 	{
 		printf("Error\n");
-		return (1);
+		return NULL;
 	}
 	test->m_up = 0;
 	test->m_down = 0;
@@ -258,15 +242,19 @@ int	main(int ac, char **av)
 	test->m_right = 0;
 	test->r_left = 0;
 	test->r_right = 0;
-    
 	test->map = ft_strdup(av[1]);
 	fd = open(test->map, O_RDONLY);
 	map_content = get_next_line(fd);
 	test->map_v2 = ft_split(map_content, '\n');
 	test->map_v3 = test->map_v2 + 6;
 	test->deta = 90;
-	if (ac != 2)
-		ft_perror();
+	return test;
+}
+
+int	main(int ac, char **av)
+{
+	t_picture *test;
+	test = initialize_structure(ac, av);
 	if (check_map_extantion(test->map) || check_character(test->map_v2)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
 		ft_perror();
