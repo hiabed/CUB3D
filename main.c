@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/27 20:39:56 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:00:21 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,10 @@ void	put_player(t_picture *test, int color)
 	float	rad;
 	float	x;
 	float	y;
-	int		i;
+	// int		i;
 	float	angl;
 
 	angl = 0;
-	i = 0;
 	while (angl < 360)
 	{
 		rad = angl * M_PI / 180;
@@ -127,14 +126,20 @@ void	put_player(t_picture *test, int color)
 		}
 		angl++;
 	}
-	x = test->x_p;
-	y = test->y_p;
-	rad = test->deta * M_PI / 180;
-	while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 10)
+	angl = test->deta - 30;
+	test->color = 0x0ff0000;
+	while (angl < test->deta + 30)
 	{
-		my_put_pixl(test, x, y, test->color);
-		x += cos(rad);
-		y -= sin(rad);
+		x = test->x_p;
+		y = test->y_p;
+		rad = angl * M_PI / 180;
+		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 20) //ray;
+		{
+			my_put_pixl(test, x, y, test->color);
+			x += cos(rad);
+			y -= sin(rad);
+		}
+		angl++;
 	}
 }
 
@@ -188,7 +193,6 @@ int	give_key(int key, t_picture *test)
 int	animate_moves(t_picture *test)
 {
     test->speed = 2;
-        //rotation(test);
     rotation(test);
     move_up(test);
     move_down(test);
@@ -201,19 +205,11 @@ int	animate_moves(t_picture *test)
 int	key_released(int key, t_picture *test)
 {
 	if (key == 123)
-	{
 		test->r_left = 0;
-        printf("r_left: %f\n", test->r_left);
-	}
 	else if (key == 124)
-	{
 		test->r_right = 0;
-        printf("r_left: %f\n", test->r_right);
-	}
     else if(key == 13)
-    {
 	    test->m_up = 0;
-    }
     else if(key == 1)
 	    test->m_down = 0;
     else if(key == 2)

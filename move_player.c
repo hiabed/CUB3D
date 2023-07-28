@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/27 20:26:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/27 20:52:04 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void    move_up(t_picture *data)
 {
     if (!data->m_up)
         return ;
-    
     data->ray_pos = data->deta * M_PI / 180;
-    data->x_p += cos(data->ray_pos) * data->speed;    
-    data->y_p -= sin(data->ray_pos) * data->speed;    
+    data->x_p += cos(data->ray_pos) * data->speed;
+    data->y_p -= sin(data->ray_pos) * data->speed;
 }
 
 void    move_down(t_picture *data)
@@ -51,8 +50,8 @@ void    move_down(t_picture *data)
     if (!data->m_down)
         return ;
     data->ray_pos = data->deta * M_PI / 180;
-    data->x_p -= cos(data->ray_pos) * data->speed;    
-    data->y_p += sin(data->ray_pos) * data->speed;    
+    data->x_p -= cos(data->ray_pos) * data->speed;
+    data->y_p += sin(data->ray_pos) * data->speed;
 }
 
 void    move_right(t_picture *data)
