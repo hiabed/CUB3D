@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/28 23:29:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/29 00:08:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,44 +104,53 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	}
 }
 
-void	put_player(t_picture *test, int color)
+int is_wall(char **map, int x, int y)
 {
-	float	rad;
-	float	x;
-	float	y;
-	float	angl;
+    if (map[y][x] == '1')
+        return 1;
+    return 0;
+}
 
-	angl = 0;
-	//draw player;
-	while (angl < 360)
-	{
-		rad = angl * M_PI / 180;
-		x = test->x_p;
-		y = test->y_p;
-		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5)
-		{
-			my_put_pixl(test, x, y, color);
-			x += cos(rad);
-			y -= sin(rad);
-		}
-		angl++;
-	}
-	//casting rays;
-	angl = test->deta - 30;
-	test->color = 0x0ff0000;
-	while (angl < test->deta + 30)
-	{
-		x = test->x_p;
-		y = test->y_p;
-		rad = angl * M_PI / 180;
-		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 200) //ray;
-		{
-			my_put_pixl(test, x, y, test->color);
-			x += cos(rad);
-			y -= sin(rad);
-		}
-		angl++;
-	}
+void put_player(t_picture *test, int color, char **map)
+{
+    float rad;
+    float x;
+    float y;
+    float angl;
+
+    angl = 0;
+    //draw player;
+    while (angl < 360)
+    {
+        rad = angl * M_PI / 180;
+        x = test->x_p;
+        y = test->y_p;
+        while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5)
+        {
+            my_put_pixl(test, x, y, color);
+            x += cos(rad);
+            y -= sin(rad);
+        }
+        angl++;
+    }
+    //casting rays;
+    angl = test->deta - 30;
+    test->color = 0x0ff0000;
+    while (angl < test->deta + 30)
+    {
+        x = test->x_p;
+        y = test->y_p;
+        rad = angl * M_PI / 180;
+        while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 200) //ray;
+        {
+            if (is_wall(map, x / 64, y / 64)) // Check for collision with a wall
+                break; // Stop the ray when it touches a wall
+            my_put_pixl(test, x, y, test->color);
+            x += cos(rad);
+            y -= sin(rad);
+        }
+        angl++;
+    }
 }
 
 void	draw_map(char **map, t_picture *test)
@@ -163,7 +172,7 @@ void	draw_map(char **map, t_picture *test)
 		}
 		y++;
 	}
-	put_player(test, 0x00FDFD55);
+	put_player(test, 0x00FDFD55, map);
 	//printf ("------> x == %d, y == %d, color == %d\n", test->data->x,
 	//test->data->y, test->data->color);
 	mlx_put_image_to_window(test->ptr, test->wind, test->image_adrr, 0, 0);
