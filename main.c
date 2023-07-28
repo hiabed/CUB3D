@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/28 23:27:04 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:27:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	put_player(t_picture *test, int color)
 		x = test->x_p;
 		y = test->y_p;
 		rad = angl * M_PI / 180;
-		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 100) //ray;
+		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 200) //ray;
 		{
 			my_put_pixl(test, x, y, test->color);
 			x += cos(rad);
