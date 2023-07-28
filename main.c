@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/28 23:27:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:29:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ void	put_player(t_picture *test, int color)
 	float	rad;
 	float	x;
 	float	y;
-	// int		i;
 	float	angl;
 
 	angl = 0;
+	//draw player;
 	while (angl < 360)
 	{
 		rad = angl * M_PI / 180;
@@ -126,6 +126,7 @@ void	put_player(t_picture *test, int color)
 		}
 		angl++;
 	}
+	//casting rays;
 	angl = test->deta - 30;
 	test->color = 0x0ff0000;
 	while (angl < test->deta + 30)
