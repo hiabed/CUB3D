@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 12:28:19 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/14 19:09:55 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/07/29 20:13:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strjoin(char *s1, char *s2, int i, int j)
 			return (0);
 		s1[0] = '\0';
 	}
-	get = malloc (ft_strlen(s1) + ft_strlen(s2) + 1);
+	get = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!get)
 	{
 		free(s1);
@@ -46,7 +46,7 @@ char	*ft_read(int fd, char *s)
 	char	*ptr;
 	int		n;
 
-	ptr = malloc (sizeof(char) * BUFFER_SIZE + 1);
+	ptr = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!ptr)
 		return (NULL);
 	n = 1;
@@ -59,8 +59,8 @@ char	*ft_read(int fd, char *s)
 			free(ptr);
 			return (0);
 		}
-	ptr[n] = '\0';
-	s = ft_strjoin (s, ptr, 0, 0);
+		ptr[n] = '\0';
+		s = ft_strjoin(s, ptr, 0, 0);
 	}
 	free(ptr);
 	return (s);
@@ -82,7 +82,7 @@ char	*get_next_line(int fd)
 	return (newbuf);
 }
 
-// int		main()
+// int		main(void)
 // {
 // 	int	fd;
 

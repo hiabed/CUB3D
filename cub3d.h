@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/28 21:32:17 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/29 21:19:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct creat_picture
 	char	*map;
 	char	**map_v3;
 	char	**map_v2;
-	float	x_p;
-	float	y_p;
+	double	x_p;
+	double	y_p;
 	float	angl;
 	float	r_left;
 	float	r_right;
@@ -66,8 +66,10 @@ typedef struct creat_picture
 	int		m_left;
 	int		m_right;
 	int		speed;
+	int		move_check;
 }			t_picture;
 
+int			is_wall(char **map, int x, int y);
 void		rotation(t_picture *data);
 void		init_player(char **map, t_picture *test);
 char		*get_next_line(int fd);

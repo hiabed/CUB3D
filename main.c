@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/29 00:31:22 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/29 21:33:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,51 +104,51 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	}
 }
 
-int is_wall(char **map, int x, int y)
+int	is_wall(char **map, int x, int y)
 {
-    if (map[y][x] == '1')
-        return 1;
-    return 0;
+	if (map[y][x] == '1')
+		return (1);
+	return (0);
 }
 
-void put_player(t_picture *test, int color, char **map)
+void	put_player(t_picture *test, int color, char **map)
 {
-    float rad;
-    float x;
-    float y;
-    float angl;
+	float	rad;
+	float	x;
+	float	y;
+	float	angl;
 
-    angl = 0;
-    //draw player;
-    while (angl < 360)
-    {
-        rad = angl * M_PI / 180;
-        x = test->x_p;
-        y = test->y_p;
-        while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5)
-        {
-            my_put_pixl(test, x, y, color);
-            x += cos(rad);
-            y -= sin(rad);
-        }
-        angl++;
-    }
-    //casting rays;
-    angl = test->deta - 30;
-    test->color = 0x0ff0000;
-    while (angl < test->deta + 30)
-    {
-        x = test->x_p;
-        y = test->y_p;
-        rad = angl * M_PI / 180;
-        while (!is_wall(map, x / 64, y / 64)) //ray;
-        {
-            my_put_pixl(test, x, y, test->color);
-            x += cos(rad);
-            y -= sin(rad);
-        }
-        angl++;
-    }
+	angl = 0;
+	//draw player;
+	while (angl < 360)
+	{
+		rad = angl * M_PI / 180;
+		x = test->x_p;
+		y = test->y_p;
+		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5)
+		{
+			my_put_pixl(test, x, y, color);
+			x += cos(rad);
+			y -= sin(rad);
+		}
+		angl++;
+	}
+	//casting rays;
+	angl = test->deta - 30;  //60 degree;
+	test->color = 0x0ff0000; //red;
+	while (angl < test->deta + 30)
+	{
+		x = test->x_p;
+		y = test->y_p;
+		rad = angl * M_PI / 180;
+		while (!is_wall(map, x / 64, y / 64)) //check if the ray hit a wall;
+		{
+			my_put_pixl(test, x, y, test->color);
+			x += cos(rad);
+			y -= sin(rad);
+		}
+		angl++;
+	}
 }
 
 void	draw_map(char **map, t_picture *test)
@@ -190,23 +190,23 @@ int	give_key(int key, t_picture *test)
 		test->m_left = 1;
 	if (key == 0)
 		test->m_right = 1;
-    if (key == 53) //esc
-    {
-        write(1, "thella ;)\n", 10);
-        exit(0);
-    }
+	if (key == 53) //esc
+	{
+		write(1, "thella ;)\n", 10);
+		exit(0);
+	}
 	return (0);
 }
 
 int	animate_moves(t_picture *test)
 {
-    test->speed = 2;
-    rotation(test);
-    move_up(test);
-    move_down(test);
-    move_left(test);
-    move_right(test);
-    draw_map(test->map_v3, test);
+	test->speed = 2;
+	rotation(test);
+	move_up(test);
+	move_down(test);
+	move_left(test);
+	move_right(test);
+	draw_map(test->map_v3, test);
 	return (0);
 }
 
@@ -216,30 +216,32 @@ int	key_released(int key, t_picture *test)
 		test->r_left = 0;
 	else if (key == 124)
 		test->r_right = 0;
-    else if(key == 13)
-	    test->m_up = 0;
-    else if(key == 1)
-	    test->m_down = 0;
-    else if(key == 2)
-	    test->m_left = 0;
-    else if(key == 0)
-	    test->m_right = 0;
+	else if (key == 13)
+		test->m_up = 0;
+	else if (key == 1)
+		test->m_down = 0;
+	else if (key == 2)
+		test->m_left = 0;
+	else if (key == 0)
+		test->m_right = 0;
 	return (0);
 }
 
-t_picture *initialize_structure(int ac, char **av)
+t_picture	*initialize_structure(int ac, char **av)
 {
 	t_picture	*test;
 	int			fd;
 	char		*map_content;
+
 	test = malloc(sizeof(t_picture));
 	if (ac != 2)
 		ft_perror();
 	if (!test)
 	{
 		printf("Error\n");
-		return NULL;
+		return (NULL);
 	}
+	test->move_check = 0;
 	test->m_up = 0;
 	test->m_down = 0;
 	test->m_left = 0;
@@ -252,12 +254,13 @@ t_picture *initialize_structure(int ac, char **av)
 	test->map_v2 = ft_split(map_content, '\n');
 	test->map_v3 = test->map_v2 + 6;
 	test->deta = 90;
-	return test;
+	return (test);
 }
 
 int	main(int ac, char **av)
 {
-	t_picture *test;
+	t_picture	*test;
+
 	test = initialize_structure(ac, av);
 	if (check_map_extantion(test->map) || check_character(test->map_v2)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
