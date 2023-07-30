@@ -67,6 +67,7 @@ typedef struct creat_picture
 	int		m_right;
 	int		speed;
 	int		move_check;
+	int ray_distance;
 }			t_picture;
 
 int			is_wall(char **map, int x, int y);

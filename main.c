@@ -134,6 +134,7 @@ void	put_player(t_picture *test, int color, char **map)
 		angl++;
 	}
 	//casting rays;
+	int ray_distance = 0;
 	angl = test->deta - 30;  //60 degree;
 	test->color = 0x0ff0000; //red;
 	while (angl < test->deta + 30)
@@ -144,6 +145,7 @@ void	put_player(t_picture *test, int color, char **map)
 		while (!is_wall(map, x / 64, y / 64)) //check if the ray hit a wall;
 		{
 			my_put_pixl(test, x, y, test->color);
+			ray_distance++;
 			x += cos(rad);
 			y -= sin(rad);
 		}
