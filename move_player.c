@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/30 18:58:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/30 20:24:22 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	move_up(t_picture *data)
     else if (!is_wall(data->map_v3, (data->x_p) / 64, (y - 5) / 64))
     {
         data->ray_pos = data->deta * M_PI / 180;
-        // data->x_p += cos(data->ray_pos) * data->speed;
+        data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
     }
 }
@@ -61,9 +61,9 @@ void	move_down(t_picture *data)
 		return ;
      if (!is_wall(data->map_v3, (data->x_p) / 64, (y + 5) / 64))
     {
-        data->ray_pos = (data->deta + 180) * M_PI / 180;
-        // data->x_p -= cos(data->ray_pos) * data->speed;
-        data->y_p -= sin(data->ray_pos) * data->speed;
+        data->ray_pos = (data->deta) * M_PI / 180;
+        data->x_p -= cos(data->ray_pos) * data->speed;
+        data->y_p += sin(data->ray_pos) * data->speed;
     }
 }
 
@@ -78,7 +78,7 @@ void	move_right(t_picture *data)
     {
         data->ray_pos = (data->deta + 90) * M_PI / 180;
         data->x_p += cos(data->ray_pos) * data->speed;
-        // data->y_p -= sin(data->ray_pos) * data->speed;
+        data->y_p -= sin(data->ray_pos) * data->speed;
     }
 }
 
@@ -93,7 +93,7 @@ void	move_left(t_picture *data)
     {
         data->ray_pos = (data->deta - 90) * M_PI / 180;
         data->x_p += cos(data->ray_pos) * data->speed;
-        // data->y_p -= sin(data->ray_pos) * data->speed;
+        data->y_p -= sin(data->ray_pos) * data->speed;
     }
 
 }
