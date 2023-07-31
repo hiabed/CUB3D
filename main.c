@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/29 21:33:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/31 23:11:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	check_text_ext(char **map)
 	char	**wall_pos;
 	char	*line_content;
 
-	;
 	i = 0;
 	while (map[i])
 	{
@@ -125,7 +124,7 @@ void	put_player(t_picture *test, int color, char **map)
 		rad = angl * M_PI / 180;
 		x = test->x_p;
 		y = test->y_p;
-		while (sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5)
+		while ((sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5))
 		{
 			my_put_pixl(test, x, y, color);
 			x += cos(rad);
@@ -134,7 +133,7 @@ void	put_player(t_picture *test, int color, char **map)
 		angl++;
 	}
 	//casting rays;
-	int ray_distance = 0;
+	test->ray_distance = 0;
 	angl = test->deta - 30;  //60 degree;
 	test->color = 0x0ff0000; //red;
 	while (angl < test->deta + 30)
@@ -142,14 +141,16 @@ void	put_player(t_picture *test, int color, char **map)
 		x = test->x_p;
 		y = test->y_p;
 		rad = angl * M_PI / 180;
+		test->ray_distance = 0;
 		while (!is_wall(map, x / 64, y / 64)) //check if the ray hit a wall;
 		{
 			my_put_pixl(test, x, y, test->color);
-			ray_distance++;
+			test->ray_distance++;
+			// printf("ray distance: %d\n", test->ray_distance);
 			x += cos(rad);
 			y -= sin(rad);
 		}
-		angl++;
+		angl+= 0.09375;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/29 21:19:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:16:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct creat_picture
 	int		len;
 	int		end;
 	float	deta;
+	float teta_ptr;
 	int		bit_pixl;
 	void	*image_adrr;
 	char	*adrr;
@@ -68,6 +69,7 @@ typedef struct creat_picture
 	int		speed;
 	int		move_check;
 	int ray_distance;
+	int player_size;
 }			t_picture;
 
 int			is_wall(char **map, int x, int y);
