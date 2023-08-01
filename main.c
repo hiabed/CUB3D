@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/31 23:11:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/01 23:13:50 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	put_player(t_picture *test, int color, char **map)
 			x += cos(rad);
 			y -= sin(rad);
 		}
-		angl+= 0.09375;
+		angl += 60.0 / 640.0;
 	}
 }
 
@@ -230,6 +230,32 @@ int	key_released(int key, t_picture *test)
 	return (0);
 }
 
+void	initialize_the_angle_of_player(t_picture *test)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (test->map_v3[j])
+	{
+		i = 0;
+		while (test->map_v3[j][i])
+		{
+			if (test->map_v3[j][i] == 'N')
+				test->deta = 90;
+			else if (test->map_v3[j][i] == 'S')
+				test->deta = 270;
+			else if (test->map_v3[j][i] == 'E')
+				test->deta = 0;
+			else if (test->map_v3[j][i] == 'W')
+				test->deta = 180;
+			i++;
+		}
+		j++;
+	}
+}
+
 t_picture	*initialize_structure(int ac, char **av)
 {
 	t_picture	*test;
@@ -256,7 +282,7 @@ t_picture	*initialize_structure(int ac, char **av)
 	map_content = get_next_line(fd);
 	test->map_v2 = ft_split(map_content, '\n');
 	test->map_v3 = test->map_v2 + 6;
-	test->deta = 90;
+	initialize_the_angle_of_player(test);
 	return (test);
 }
 
