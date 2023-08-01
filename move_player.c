@@ -45,7 +45,7 @@ void	move_up(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_up)
 		return ;
-    else if (!is_wall(data->map_v3, (x) / 64, (y) / 64))
+    else if (!is_wall(data->map_v3, x / 64, y / 64))
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
@@ -61,7 +61,7 @@ void	move_down(t_picture *data)
 	if (!data->m_down)
 		return ;
 
-    else if (!is_wall(data->map_v3, x / 64, (y) / 64))
+    else if (!is_wall(data->map_v3, x / 64, y / 64))
     {
         data->x_p -= cos(data->ray_pos) * data->speed;
         data->y_p += sin(data->ray_pos) * data->speed;
@@ -71,13 +71,15 @@ void	move_down(t_picture *data)
 void	move_right(t_picture *data)
 {
     double x, y;
-     data->ray_pos = (data->deta + 90) * M_PI / 180;
+    data->ray_pos = (data->deta + 90) * M_PI / 180;
+    // for check;
     x = data->x_p + cos(data->ray_pos) * data->speed;
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_right)
 		return ;
-    else if (!is_wall(data->map_v3, (x) / 64, y / 64))
+    else if (!is_wall(data->map_v3, x / 64, y / 64))
     {
+        //change player position after check;
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
     }
@@ -91,7 +93,7 @@ void	move_left(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_left)
 		return ;
-    else if (!is_wall(data->map_v3, (x) / 64, y / 64))
+    else if (!is_wall(data->map_v3, x / 64, y / 64))
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
