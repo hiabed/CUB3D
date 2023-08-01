@@ -91,7 +91,7 @@ void	move_left(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_left)
 		return ;
-    else if (!is_wall(data->map_v3, (x + 5) / 64, y / 64))
+    else if (!is_wall(data->map_v3, (x) / 64, y / 64))
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
