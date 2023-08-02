@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/01 23:13:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/03 00:46:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,37 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	}
 }
 
-int	is_wall(char **map, int x, int y)
+int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 {
-	if (map[y][x] == '1')
+	(void)x_p;
+	(void)y_p;
+	(void)alpha;
+	if (data->map_v3[y][x] == '1')
 		return (1);
+	else if(cos(alpha) > 0 && sin(alpha) < 0)
+	{
+		if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
+			return (1);
+	}
+	else if (cos(alpha) > 0 && sin(alpha) > 0)
+	{
+		if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
+			return (1);
+	}
+	else if (cos(alpha) < 0 && sin(alpha) > 0)
+	{
+		if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
+			return (1);
+	}
+	else if (cos(alpha) < 0 && sin(alpha) < 0)
+	{
+		if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
+			return (1);
+	}
 	return (0);
 }
 
-void	put_player(t_picture *test, int color, char **map)
+void	put_player(t_picture *test, int color)
 {
 	float	rad;
 	float	x;
@@ -134,19 +157,19 @@ void	put_player(t_picture *test, int color, char **map)
 	}
 	//casting rays;
 	test->ray_distance = 0;
+	test->middle_ray = 0;
 	angl = test->deta - 30;  //60 degree;
 	test->color = 0x0ff0000; //red;
 	while (angl < test->deta + 30)
 	{
 		x = test->x_p;
 		y = test->y_p;
-		rad = angl * M_PI / 180;
+		rad = angl * M_PI / 180; //convert to radian;
 		test->ray_distance = 0;
-		while (!is_wall(map, x / 64, y / 64)) //check if the ray hit a wall;
+		while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64), (test->y_p), rad)) //check if the ray hit a wall;
 		{
 			my_put_pixl(test, x, y, test->color);
 			test->ray_distance++;
-			// printf("ray distance: %d\n", test->ray_distance);
 			x += cos(rad);
 			y -= sin(rad);
 		}
@@ -173,7 +196,7 @@ void	draw_map(char **map, t_picture *test)
 		}
 		y++;
 	}
-	put_player(test, 0x00FDFD55, map);
+	put_player(test, 0x00FDFD55);
 	//printf ("------> x == %d, y == %d, color == %d\n", test->data->x,
 	//test->data->y, test->data->color);
 	mlx_put_image_to_window(test->ptr, test->wind, test->image_adrr, 0, 0);
