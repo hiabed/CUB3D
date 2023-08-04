@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 17:36:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:46:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,46 +105,29 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 
 int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 {
-	(void)x_p;
-	(void)y_p;
-	// (void)alpha;
 	if (data->map_v3[y][x] == '1')
 		return (1);
 	else if (x != x_p || y != y_p)
 	{
 		if(cos(alpha) > 0 && sin(alpha) < 0)
 		{
-			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1' &&  data->map_v3[y - 1][x - 1] != '1')
-			{
-				printf("1\n");
+			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
-			}
 		}
 		else if (cos(alpha) > 0 && sin(alpha) > 0)
 		{
-			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1' &&  data->map_v3[y + 1][x - 1] != '1')
-			{
-				printf("2\n");
+			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
-			}
 		}
 		else if (cos(alpha) < 0 && sin(alpha) > 0)
 		{
-			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1' &&  data->map_v3[y + 1][x + 1] != '1')
-			{
-				printf("3\n");
-				printf("y: %d\n", y);
-				printf("x: %d\n", x);
+			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
-			}
 		}
 		else if (cos(alpha) < 0 && sin(alpha) < 0)
 		{
-			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1' &&  data->map_v3[y - 1][x + 1] != '1')
-			{
-				printf("4\n");
+			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
-			}
 		}
 	}
 	return (0);
