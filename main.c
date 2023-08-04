@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/03 00:46:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:36:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	int	y;
 
 	x = old_x;
-	while (x <= old_x + 64)
+	while (x <= old_x + 62)
 	{
 		y = old_y;
-		while (y <= old_y + 64)
+		while (y <= old_y + 62)
 			my_put_pixl(test, x, y++, color);
 		x++;
 	}
@@ -107,30 +107,54 @@ int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 {
 	(void)x_p;
 	(void)y_p;
-	(void)alpha;
+	// (void)alpha;
 	if (data->map_v3[y][x] == '1')
 		return (1);
-	else if(cos(alpha) > 0 && sin(alpha) < 0)
+	else if (x != x_p || y != y_p)
 	{
-		if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
-			return (1);
-	}
-	else if (cos(alpha) > 0 && sin(alpha) > 0)
-	{
-		if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
-			return (1);
-	}
-	else if (cos(alpha) < 0 && sin(alpha) > 0)
-	{
-		if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
-			return (1);
-	}
-	else if (cos(alpha) < 0 && sin(alpha) < 0)
-	{
-		if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
-			return (1);
+		if(cos(alpha) > 0 && sin(alpha) < 0)
+		{
+			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1' &&  data->map_v3[y - 1][x - 1] != '1')
+			{
+				printf("1\n");
+				return (1);
+			}
+		}
+		else if (cos(alpha) > 0 && sin(alpha) > 0)
+		{
+			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1' &&  data->map_v3[y + 1][x - 1] != '1')
+			{
+				printf("2\n");
+				return (1);
+			}
+		}
+		else if (cos(alpha) < 0 && sin(alpha) > 0)
+		{
+			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1' &&  data->map_v3[y + 1][x + 1] != '1')
+			{
+				printf("3\n");
+				printf("y: %d\n", y);
+				printf("x: %d\n", x);
+				return (1);
+			}
+		}
+		else if (cos(alpha) < 0 && sin(alpha) < 0)
+		{
+			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1' &&  data->map_v3[y - 1][x + 1] != '1')
+			{
+				printf("4\n");
+				return (1);
+			}
+		}
 	}
 	return (0);
+}
+
+int is_wall(t_picture *data, int x, int y)
+{
+    if (data->map_v3[y][x] == '1')
+        return 1;
+    return 0;
 }
 
 void	put_player(t_picture *test, int color)
@@ -166,7 +190,8 @@ void	put_player(t_picture *test, int color)
 		y = test->y_p;
 		rad = angl * M_PI / 180; //convert to radian;
 		test->ray_distance = 0;
-		while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64), (test->y_p), rad)) //check if the ray hit a wall;
+		while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64),
+				(test->y_p / 64), rad)) //check if the ray hit a wall;
 		{
 			my_put_pixl(test, x, y, test->color);
 			test->ray_distance++;

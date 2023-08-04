@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/02 19:34:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:49:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct creat_picture
 	int		wall_check;
 }			t_picture;
 
+int			is_wall(t_picture *data, int x, int y);
 int			is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p,
 				float alpha);
 void		rotation(t_picture *data);
