@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 00:50:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:53:03 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	move_up(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_up)
 		return ;
-    else if (!is_wall(data, x / 64, y / 64))
+    else if (!is_wall_ray(data, x / 64, y / 64, data->x_p / 64, data->y_p / 64, data->ray_pos))
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
@@ -61,7 +61,7 @@ void	move_down(t_picture *data)
 	if (!data->m_down)
 		return ;
 
-    else if (!is_wall(data, x / 64, y / 64))
+    else if (!is_wall_ray(data, x / 64, y / 64, data->x_p / 64, data->y_p / 64, data->ray_pos))
     {
         data->x_p -= cos(data->ray_pos) * data->speed;
         data->y_p += sin(data->ray_pos) * data->speed;
@@ -77,7 +77,7 @@ void	move_right(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_right)
 		return ;
-    else if (!is_wall(data, x / 64, y / 64))
+    else if (!is_wall_ray(data, x / 64, y / 64, data->x_p / 64, data->y_p / 64, data->ray_pos))
     {
         //change player position after check;
         data->x_p += cos(data->ray_pos) * data->speed;
@@ -93,7 +93,7 @@ void	move_left(t_picture *data)
     y = data->y_p - sin(data->ray_pos) * data->speed;
 	if (!data->m_left)
 		return ;
-    else if (!is_wall(data, x / 64, y / 64))
+    else if (!is_wall_ray(data, x / 64, y / 64, data->x_p / 64, data->y_p / 64, data->ray_pos))
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
