@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 17:49:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:46:26 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	int	y;
 
 	x = old_x;
-	while (x <= old_x + 62)
+	while (x <= old_x + 64)
 	{
 		y = old_y;
-		while (y <= old_y + 62)
+		while (y <= old_y + 64)
 			my_put_pixl(test, x, y++, color);
 		x++;
 	}
@@ -133,13 +133,6 @@ int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 		}
 	}
 	return (0);
-}
-
-int is_wall(t_picture *data, int x, int y)
-{
-    if (data->map_v3[y][x] == '1')
-        return 1;
-    return 0;
 }
 
 void	put_player(t_picture *test, int color)
