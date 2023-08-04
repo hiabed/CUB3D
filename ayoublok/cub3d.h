@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 22:02:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 22:12:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ typedef struct creat_picture
 	char	**map_v2;
 	double	x_p;
 	double	y_p;
-	float	angl;
-	float	r_left;
-	float	r_right;
-	float	ray_pos;
+	double	angl;
+	double	r_left;
+	double	r_right;
+	double	ray_pos;
+	double	wall_tall;
+	double	dist_p_screen;
+	double	tan_angl;
 	int		color;
 	int		wigth;
 	int		hight;
@@ -57,8 +60,8 @@ typedef struct creat_picture
 	int		x;
 	int		len;
 	int		end;
-	float	deta;
-	float	teta_ptr;
+	double	deta;
+	double	teta_ptr;
 	int		bit_pixl;
 	void	*image_adrr;
 	char	*adrr;
@@ -68,16 +71,16 @@ typedef struct creat_picture
 	int		m_right;
 	int		speed;
 	int		move_check;
-	int		ray_distance;
+	double	ray_distance;
+	double	new_ray_distance;
 	int		player_size;
-	int		middle_ray;
-	int		wall_check;
+	int		f;
 }			t_picture;
 
-int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha);
-int			is_wall(t_picture *data, int x, int y);
+void		draw_map(char **map, t_picture *test);
 int			is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p,
 				float alpha);
+int			is_wall(char **map, int x, int y);
 void		rotation(t_picture *data);
 void		init_player(char **map, t_picture *test);
 char		*get_next_line(int fd);
@@ -103,5 +106,7 @@ void		move_up(t_picture *data);
 void		move_down(t_picture *data);
 void		move_right(t_picture *data);
 void		move_left(t_picture *data);
+void		my_put_pixl(t_picture *test, int x, int y, int color);
+void		inital_draw_wall(t_picture *data, char **map);
 
 #endif
