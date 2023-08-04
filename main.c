@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 17:47:31 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:49:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,22 +105,32 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 
 int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 {
+	double coss = cos(alpha);
+	double sinn = sin(alpha);
 	if (data->map_v3[y][x] == '1')
 		return (1);
 	else if (x != x_p || y != y_p)
 	{
-		if(cos(alpha) > 0 && sin(alpha) < 0)
+		if(coss > 0 && sinn < 0)
+		{
 			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
-		else if (cos(alpha) > 0 && sin(alpha) > 0)
+		}
+		else if (coss > 0 && sinn > 0)
+		{
 			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
-		else if (cos(alpha) < 0 && sin(alpha) > 0)
+		}
+		else if (coss < 0 && sinn > 0)
+		{
 			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
-		else if (cos(alpha) < 0 && sin(alpha) < 0)
+		}
+		else if (coss < 0 && sinn < 0)
+		{
 			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
+		}
 	}
 	return (0);
 }
