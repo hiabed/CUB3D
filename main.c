@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/06 22:22:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/06 23:55:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	int	y;
 
 	x = old_x;
-	while (x <= old_x + 64)
+	while (x <= old_x + 62)
 	{
 		y = old_y;
-		while (y <= old_y + 64)
+		while (y <= old_y + 62)
 			my_put_pixl(test, x, y++, color);
 		x++;
 	}
@@ -157,14 +157,14 @@ int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 
 t_picture	*horizontal_intersections(t_picture *data, float x, float y)
 {
-	float adjacent;
-	float opposite;
+	float adjacent; // y
+	float opposite; // x
 	float ray_distance;
 	float rad;
 	rad = data->deta * M_PI / 180;	
 	if (sin(rad) < 0)
 	{
-		adjacent = abs((int)data->y_p % 64 - 64);
+		adjacent = abs((int)data->y_p % 64 - 64); 
 		opposite = adjacent / tan(rad);
 		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
 		int i = 0;
@@ -176,6 +176,22 @@ t_picture	*horizontal_intersections(t_picture *data, float x, float y)
 			x += cos(rad);
 			y -= sin(rad);
 			i++;
+		}
+		adjacent = 64;
+		opposite = adjacent / tan(rad);
+		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		int j = 0;
+		while(j < 5)
+		{
+			i = 0;
+			while (i < ray_distance)
+			{
+				my_put_pixl(data, x, y, data->color);
+				x += cos(rad);
+				y -= sin(rad);
+				i++;
+			}
+			j++;
 		}
 	}
 	else if (sin(rad) > 0)
@@ -192,6 +208,22 @@ t_picture	*horizontal_intersections(t_picture *data, float x, float y)
 			x += cos(rad);
 			y -= sin(rad);
 			i++;
+		}
+		adjacent = 64;
+		opposite = adjacent / tan(rad); //64
+		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		int j = 0;
+		while(j < 5)
+		{
+			i = 0;
+			while (i < ray_distance)
+			{
+				my_put_pixl(data, x, y, data->color);
+				x += cos(rad);
+				y -= sin(rad);
+				i++;
+			}
+			j++;
 		}
 	}
 	return (data);
@@ -330,7 +362,7 @@ void	initialize_the_angle_of_player(t_picture *test)
 		while (test->map_v3[j][i])
 		{
 			if (test->map_v3[j][i] == 'N')
-				test->deta = 45;
+				test->deta = 90;
 			else if (test->map_v3[j][i] == 'S')
 				test->deta = 270;
 			else if (test->map_v3[j][i] == 'E')
