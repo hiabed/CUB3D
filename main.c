@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 18:46:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:22:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,34 +105,96 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 
 int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
 {
-	double coss = cos(alpha);
-	double sinn = sin(alpha);
+	double	coss;
+	double	sinn;
+
+	coss = cos(alpha);
+	sinn = sin(alpha);
 	if (data->map_v3[y][x] == '1')
 		return (1);
 	else if (x != x_p || y != y_p)
 	{
-		if(coss > 0 && sinn < 0)
+		if (coss >= 0 && sinn <= 0)
 		{
 			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
 		}
-		else if (coss > 0 && sinn > 0)
+		else if (coss >= 0 && sinn >= 0)
 		{
 			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
 				return (1);
 		}
-		else if (coss < 0 && sinn > 0)
+		else if (coss <= 0 && sinn >= 0)
 		{
 			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
 		}
-		else if (coss < 0 && sinn < 0)
+		else if (coss <= 0 && sinn <= 0)
 		{
 			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
 				return (1);
 		}
 	}
 	return (0);
+}
+
+// t_picture *vertical_intersections(t_picture *data, int x, int y, float rad)
+// {
+// 	if (cos(rad) < 0)
+		// Ray moving horizontally to the left and check the vertical lines;
+// 	{
+// 		printf("here1\n");
+// 		// Handle intersection with left-boundary of cells
+// 	}
+// 	else if (cos(rad) > 0)
+		// Ray moving horizontally to the right and check the vertical lines;
+// 	{
+// 		printf("here2\n");
+// 		// Handle intersection with right-boundary of cells
+// 	}
+// 	return (data);
+// }
+
+t_picture	*horizontal_intersections(t_picture *data, float x, float y)
+{
+	float adjacent;
+	float opposite;
+	float ray_distance;
+	float rad;
+	rad = data->deta * M_PI / 180;	
+	if (sin(rad) < 0)
+	{
+		adjacent = abs((int)data->y_p % 64 - 64);
+		opposite = adjacent / tan(rad);
+		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		int i = 0;
+		x = data->x_p;
+		y = data->y_p;
+		while (i < ray_distance)
+		{
+			my_put_pixl(data, x, y, data->color);
+			x += cos(rad);
+			y -= sin(rad);
+			i++;
+		}
+	}
+	else if (sin(rad) > 0)
+	{
+		adjacent = (int)data->y_p % 64;
+		opposite = adjacent / tan(rad);
+		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		int i = 0;
+		x = data->x_p;
+		y = data->y_p;
+		while (i < ray_distance)
+		{
+			my_put_pixl(data, x, y, data->color);
+			x += cos(rad);
+			y -= sin(rad);
+			i++;
+		}
+	}
+	return (data);
 }
 
 void	put_player(t_picture *test, int color)
@@ -158,26 +220,25 @@ void	put_player(t_picture *test, int color)
 		angl++;
 	}
 	//casting rays;
-	test->ray_distance = 0;
-	test->middle_ray = 0;
-	angl = test->deta - 30;  //60 degree;
+	// angl = test->deta;  //90 degree;
 	test->color = 0x0ff0000; //red;
-	while (angl < test->deta + 30)
-	{
-		x = test->x_p;
-		y = test->y_p;
-		rad = angl * M_PI / 180; //convert to radian;
-		test->ray_distance = 0;
-		while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64),
-				(test->y_p / 64), rad)) //check if the ray hit a wall;
-		{
-			my_put_pixl(test, x, y, test->color);
-			test->ray_distance++;
-			x += cos(rad);
-			y -= sin(rad);
-		}
-		angl += 60.0 / 640.0;
-	}
+	// while (angl < test->deta + 30)
+	// {
+		// x = test->x_p;
+		// y = test->y_p;
+		 //convert to radian;
+		// while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64),
+		// 	(test->y_p / 64), rad)) //check if the ray hit a wall;
+		// {
+		// 	my_put_pixl(test, x, y, test->color);
+		// 	test->ray_distance++;
+		// 	x += cos(rad);
+		// 	y -= sin(rad);
+		// }
+		// vertical_intersections(test, x, y, rad);
+		horizontal_intersections(test, x, y);
+		// angl += 60.0 / 640.0;
+	//}
 }
 
 void	draw_map(char **map, t_picture *test)
@@ -191,8 +252,8 @@ void	draw_map(char **map, t_picture *test)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '1')
-				draw_squar(test, x * 64, y * 64, 0x000000CD);
+			// if (map[y][x] == '1')
+			// 	draw_squar(test, x * 64, y * 64, 0x000000CD);
 			if (map[y][x] == '0')
 				draw_squar(test, x * 64, y * 64, 30778801);
 			x++;
@@ -269,7 +330,7 @@ void	initialize_the_angle_of_player(t_picture *test)
 		while (test->map_v3[j][i])
 		{
 			if (test->map_v3[j][i] == 'N')
-				test->deta = 90;
+				test->deta = 45;
 			else if (test->map_v3[j][i] == 'S')
 				test->deta = 270;
 			else if (test->map_v3[j][i] == 'E')

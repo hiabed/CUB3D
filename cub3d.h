@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/04 22:02:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/05 13:26:04 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ typedef struct creat_picture
 	int		player_size;
 	int		middle_ray;
 	int		wall_check;
+	int		f;
+	double	dist_p_screen;
+	double	wall_tall;
 }			t_picture;
 
-int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha);
-int			is_wall(t_picture *data, int x, int y);
 int			is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p,
 				float alpha);
+int			is_wall(t_picture *data, int x, int y);
 void		rotation(t_picture *data);
 void		init_player(char **map, t_picture *test);
 char		*get_next_line(int fd);

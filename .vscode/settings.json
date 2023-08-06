@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "__node_handle": "c",
-        "complex": "c"
+        "complex": "c",
+        "bitset": "c"
     }
 }
