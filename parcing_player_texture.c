@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_player_texture.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:44:57 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/22 11:18:23 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:53:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int     check_map_extantion(char *map)
     int i;
 
     i = 0;
-     while (map[i])
+    while (map[i])
         i++;
     while (i >= 0)
     {
-        if (map[i] == '.')
+        if (map[i] == '.' && map[i])
         {
             if (map[i + 1] == 'c' && map[i + 2] == 'u' && map[i + 3] == 'b' && !map[i + 4])
                 return (0);

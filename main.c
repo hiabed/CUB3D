@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/06 23:55:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:50:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,127 +103,164 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	}
 }
 
-int	is_wall_ray(t_picture *data, int x, int y, int x_p, int y_p, float alpha)
+int	is_wall(t_picture *data, int x, int y)
 {
-	double	coss;
-	double	sinn;
-
-	coss = cos(alpha);
-	sinn = sin(alpha);
-	if (data->map_v3[y][x] == '1')
-		return (1);
-	else if (x != x_p || y != y_p)
+	// int i = 0;
+	if (x * 64 < 0 || y * 64 < 0)
+		return 0;
+	if (data->map_v3 && data->map_v3[y][x] == '1')
 	{
-		if (coss >= 0 && sinn <= 0)
-		{
-			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x - 1] == '1')
-				return (1);
-		}
-		else if (coss >= 0 && sinn >= 0)
-		{
-			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x - 1] == '1')
-				return (1);
-		}
-		else if (coss <= 0 && sinn >= 0)
-		{
-			if (data->map_v3[y + 1][x] == '1' && data->map_v3[y][x + 1] == '1')
-				return (1);
-		}
-		else if (coss <= 0 && sinn <= 0)
-		{
-			if (data->map_v3[y - 1][x] == '1' && data->map_v3[y][x + 1] == '1')
-				return (1);
-		}
+		return (1);
 	}
+	else
+		return 0;
 	return (0);
 }
 
-// t_picture *vertical_intersections(t_picture *data, int x, int y, float rad)
-// {
-// 	if (cos(rad) < 0)
-		// Ray moving horizontally to the left and check the vertical lines;
-// 	{
-// 		printf("here1\n");
-// 		// Handle intersection with left-boundary of cells
-// 	}
-// 	else if (cos(rad) > 0)
-		// Ray moving horizontally to the right and check the vertical lines;
-// 	{
-// 		printf("here2\n");
-// 		// Handle intersection with right-boundary of cells
-// 	}
-// 	return (data);
-// }
-
-t_picture	*horizontal_intersections(t_picture *data, float x, float y)
+t_picture *vertical_intersections(t_picture *data, float x, float y)
 {
-	float adjacent; // y
-	float opposite; // x
+	float ty; // y
+	float tx; // x
 	float ray_distance;
 	float rad;
+	// data->deta = 100;
+	rad = data->deta * M_PI / 180;
+	if (cos(rad) < 0)
+	{
+		tx = (int)data->x_p % 64; 
+		ty = tx * tan(rad);
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		printf("tx: %f, ty: %f, distance: %f\n", tx, ty, ray_distance);
+		printf("===>theta: %f\n", data->deta);
+		int i = 0;
+		x = data->x_p;
+		y = data->y_p;
+		while (i < ray_distance && !is_wall(data, x / 64, y / 64))
+		{
+			my_put_pixl(data, x, y, data->color);
+			x += cos(rad);
+			y -= sin(rad);
+			i++;
+		}
+		tx = 64;
+		ty = tx * tan(rad);
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		int j = 0;
+		while(!is_wall(data, x / 64, y / 64))
+		{
+			i = 0;
+			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
+			{
+				my_put_pixl(data, x, y, data->color);
+				x += cos(rad);
+				y -= sin(rad);
+				i++;
+			}
+		}
+	}
+	else if (cos(rad) >= 0)
+	{
+		tx = abs((int)data->x_p % 64 - 64);
+		ty = tx * tan(rad);
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		printf("tx: %f, ty: %f, distance: %f\n", tx, ty, ray_distance);
+		printf("===>theta: %f\n", data->deta);
+		int i = 0;
+		x = data->x_p;
+		y = data->y_p;
+		//printf("x %d\n",x);
+		while (i < ray_distance && !is_wall(data, x / 64, y / 64))
+		{
+			//printf("*****here\n");
+			my_put_pixl(data, x, y, data->color);
+			x += cos(rad);
+			y -= sin(rad);
+			i++;
+		}
+		tx = 64;
+		ty = tx * tan(rad); //64
+		ray_distance = sqrt(pow(ty, 2) + pow(tx, 2));
+		while(!is_wall(data, x / 64, y / 64))
+		{
+			i = 0;
+			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
+			{
+				my_put_pixl(data, x, y, data->color);
+				x += cos(rad);
+				y -= sin(rad);
+				i++;
+			}
+		}
+	}
+	return (data);
+}
+
+t_picture	*horizontal_intersections(t_picture *data, float x, float y) //done;
+{
+	float ty; // y
+	float tx; // x
+	float ray_distance;
+	float rad;
+	
 	rad = data->deta * M_PI / 180;	
 	if (sin(rad) < 0)
 	{
-		adjacent = abs((int)data->y_p % 64 - 64); 
-		opposite = adjacent / tan(rad);
-		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		ty = abs((int)data->y_p % 64 - 64); 
+		tx = ty / tan(rad);
+		ray_distance = sqrt(pow(ty, 2) + pow(tx, 2));
 		int i = 0;
 		x = data->x_p;
 		y = data->y_p;
-		while (i < ray_distance)
+		while (i < ray_distance && !is_wall(data, x / 64, y / 64))
 		{
 			my_put_pixl(data, x, y, data->color);
 			x += cos(rad);
 			y -= sin(rad);
 			i++;
 		}
-		adjacent = 64;
-		opposite = adjacent / tan(rad);
-		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
-		int j = 0;
-		while(j < 5)
+		ty = 64;
+		tx = ty / tan(rad);
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		while(!is_wall(data, x / 64, y / 64))
 		{
 			i = 0;
-			while (i < ray_distance)
+			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
 			{
 				my_put_pixl(data, x, y, data->color);
 				x += cos(rad);
 				y -= sin(rad);
 				i++;
 			}
-			j++;
 		}
 	}
-	else if (sin(rad) > 0)
+	else if (sin(rad) >= 0) //done;
 	{
-		adjacent = (int)data->y_p % 64;
-		opposite = adjacent / tan(rad);
-		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
+		ty = (int)data->y_p % 64;
+		tx = ty / tan(rad);
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
 		int i = 0;
 		x = data->x_p;
 		y = data->y_p;
-		while (i < ray_distance)
+		while (i < ray_distance && !is_wall(data, x / 64, y / 64))
 		{
 			my_put_pixl(data, x, y, data->color);
 			x += cos(rad);
 			y -= sin(rad);
 			i++;
 		}
-		adjacent = 64;
-		opposite = adjacent / tan(rad); //64
-		ray_distance = sqrt(pow(opposite, 2) + pow(adjacent, 2));
-		int j = 0;
-		while(j < 5)
+		ty = 64;
+		tx = ty / tan(rad); //64
+		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		while(!is_wall(data, x / 64, y / 64))
 		{
 			i = 0;
-			while (i < ray_distance)
+			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
 			{
 				my_put_pixl(data, x, y, data->color);
 				x += cos(rad);
 				y -= sin(rad);
 				i++;
 			}
-			j++;
 		}
 	}
 	return (data);
@@ -252,25 +289,9 @@ void	put_player(t_picture *test, int color)
 		angl++;
 	}
 	//casting rays;
-	// angl = test->deta;  //90 degree;
 	test->color = 0x0ff0000; //red;
-	// while (angl < test->deta + 30)
-	// {
-		// x = test->x_p;
-		// y = test->y_p;
-		 //convert to radian;
-		// while (!is_wall_ray(test, (x / 64), (y / 64), (test->x_p / 64),
-		// 	(test->y_p / 64), rad)) //check if the ray hit a wall;
-		// {
-		// 	my_put_pixl(test, x, y, test->color);
-		// 	test->ray_distance++;
-		// 	x += cos(rad);
-		// 	y -= sin(rad);
-		// }
-		// vertical_intersections(test, x, y, rad);
-		horizontal_intersections(test, x, y);
-		// angl += 60.0 / 640.0;
-	//}
+	horizontal_intersections(test, x, y);
+	vertical_intersections(test, x, y);
 }
 
 void	draw_map(char **map, t_picture *test)
@@ -362,7 +383,10 @@ void	initialize_the_angle_of_player(t_picture *test)
 		while (test->map_v3[j][i])
 		{
 			if (test->map_v3[j][i] == 'N')
+			{
+				printf ("**************\n");
 				test->deta = 90;
+			}
 			else if (test->map_v3[j][i] == 'S')
 				test->deta = 270;
 			else if (test->map_v3[j][i] == 'E')
@@ -396,8 +420,8 @@ t_picture	*initialize_structure(int ac, char **av)
 	test->m_right = 0;
 	test->r_left = 0;
 	test->r_right = 0;
-	test->map = ft_strdup(av[1]);
-	fd = open(test->map, O_RDONLY);
+	// test->map = ft_strdup(av[1]);
+	fd = open(av[1], O_RDONLY);
 	map_content = get_next_line(fd);
 	test->map_v2 = ft_split(map_content, '\n');
 	test->map_v3 = test->map_v2 + 6;
@@ -410,7 +434,7 @@ int	main(int ac, char **av)
 	t_picture	*test;
 
 	test = initialize_structure(ac, av);
-	if (check_map_extantion(test->map) || check_character(test->map_v2)
+	if (check_map_extantion(av[1]) || check_character(test->map_v2)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
 		ft_perror();
 	init_player(test->map_v3, test);
@@ -422,6 +446,7 @@ int	main(int ac, char **av)
 	test->r_left = 0;
 	test->r_right = 0;
 	draw_map(test->map_v3, test);
+
 	//draw_player(map_v3, test);
 	mlx_hook(test->wind, 17, 0, ft_exit, NULL);
 	mlx_hook(test->wind, 2, 0, give_key, test);

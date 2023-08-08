@@ -6,13 +6,13 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/06 18:59:46 by mhassani         ###   ########.fr        #
+#    Updated: 2023/08/07 16:40:25 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS =  -fsanitize=address #-Wall -Wextra -Werror
 
 SRCS = 	main.c \
 		get_next_line.c	\
@@ -35,7 +35,7 @@ OBJ = ${SRCS:.c=.o}
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 #bonus : ${OBJBONUS} $(CC) $(OBJBONUS) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
