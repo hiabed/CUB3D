@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/07 16:07:22 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:36:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ typedef struct creat_picture
 	int		f;
 	double	dist_p_screen;
 	double	wall_tall;
+	float	tx_hor;
+	float	ty_hor;
+	float	ray_distance_hor;
+	float	tx_ver;
+	float	ty_ver;
+	float	ray_distance_ver;
+	float	ray_distance_ver_store;
 }			t_picture;
 
 int			is_wall(t_picture *data, int x, int y);
