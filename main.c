@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/08 01:50:47 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:58:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,21 +142,21 @@ t_picture *vertical_intersections(t_picture *data, float x, float y)
 			y -= sin(rad);
 			i++;
 		}
-		tx = 64;
-		ty = tx * tan(rad);
-		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
-		int j = 0;
-		while(!is_wall(data, x / 64, y / 64))
-		{
-			i = 0;
-			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
-			{
-				my_put_pixl(data, x, y, data->color);
-				x += cos(rad);
-				y -= sin(rad);
-				i++;
-			}
-		}
+		// tx = 64;
+		// ty = tx * tan(rad);
+		// ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		// int j = 0;
+		// while(!is_wall(data, x / 64, y / 64))
+		// {
+		// 	i = 0;
+		// 	while (i < ray_distance)
+		// 	{
+		// 		my_put_pixl(data, x, y, data->color);
+		// 		x += cos(rad);
+		// 		y -= sin(rad);
+		// 		i++;
+		// 	}
+		// }
 	}
 	else if (cos(rad) >= 0)
 	{
@@ -177,20 +177,20 @@ t_picture *vertical_intersections(t_picture *data, float x, float y)
 			y -= sin(rad);
 			i++;
 		}
-		tx = 64;
-		ty = tx * tan(rad); //64
-		ray_distance = sqrt(pow(ty, 2) + pow(tx, 2));
-		while(!is_wall(data, x / 64, y / 64))
-		{
-			i = 0;
-			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
-			{
-				my_put_pixl(data, x, y, data->color);
-				x += cos(rad);
-				y -= sin(rad);
-				i++;
-			}
-		}
+		// tx = 64;
+		// ty = tx * tan(rad); //64
+		// ray_distance = sqrt(pow(ty, 2) + pow(tx, 2));
+		// while(!is_wall(data, x / 64, y / 64))
+		// {
+		// 	i = 0;
+		// 	while (i < ray_distance)
+		// 	{
+		// 		my_put_pixl(data, x, y, data->color);
+		// 		x += cos(rad);
+		// 		y -= sin(rad);
+		// 		i++;
+		// 	}
+		// }
 	}
 	return (data);
 }
@@ -218,20 +218,20 @@ t_picture	*horizontal_intersections(t_picture *data, float x, float y) //done;
 			y -= sin(rad);
 			i++;
 		}
-		ty = 64;
-		tx = ty / tan(rad);
-		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
-		while(!is_wall(data, x / 64, y / 64))
-		{
-			i = 0;
-			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
-			{
-				my_put_pixl(data, x, y, data->color);
-				x += cos(rad);
-				y -= sin(rad);
-				i++;
-			}
-		}
+		// ty = 64;
+		// tx = ty / tan(rad);
+		// ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		// while(!is_wall(data, x / 64, y / 64))
+		// {
+		// 	i = 0;
+		// 	while (i < ray_distance)
+		// 	{
+		// 		my_put_pixl(data, x, y, data->color);
+		// 		x += cos(rad);
+		// 		y -= sin(rad);
+		// 		i++;
+		// 	}
+		// }
 	}
 	else if (sin(rad) >= 0) //done;
 	{
@@ -248,20 +248,20 @@ t_picture	*horizontal_intersections(t_picture *data, float x, float y) //done;
 			y -= sin(rad);
 			i++;
 		}
-		ty = 64;
-		tx = ty / tan(rad); //64
-		ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
-		while(!is_wall(data, x / 64, y / 64))
-		{
-			i = 0;
-			while (i < ray_distance && !is_wall(data, x / 64, y / 64))
-			{
-				my_put_pixl(data, x, y, data->color);
-				x += cos(rad);
-				y -= sin(rad);
-				i++;
-			}
-		}
+		// ty = 64;
+		// tx = ty / tan(rad); //64
+		// ray_distance = sqrt(pow(tx, 2) + pow(ty, 2));
+		// while(!is_wall(data, x / 64, y / 64))
+		// {
+		// 	i = 0;
+		// 	while (i < ray_distance)
+		// 	{
+		// 		my_put_pixl(data, x, y, data->color);
+		// 		x += cos(rad);
+		// 		y -= sin(rad);
+		// 		i++;
+		// 	}
+		// }
 	}
 	return (data);
 }
