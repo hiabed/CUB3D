@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/08 21:09:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:11:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	draw_squar(t_picture *test, int old_x, int old_y, int color)
 	int	y;
 
 	x = old_x;
-	while (x <= old_x + 62)
+	while (x <= old_x + 64)
 	{
 		y = old_y;
-		while (y <= old_y + 62)
+		while (y <= old_y + 64)
 			my_put_pixl(test, x, y++, color);
 		x++;
 	}
@@ -109,35 +109,31 @@ int	is_wall(t_picture *data, int x, int y)
 	int	i;
 
 	j = 0;
-	while (data->map_v3[j] && data->map_v3)
+	while (data->map_v3 && data->map_v3[j])
 		j++;
+	if (y >= j || x < 0 || y < 0)
+		return (1);
 	i = 0;
-	while (data->map_v3[0][i] && data->map_v3)
+	while (data->map_v3[y] && data->map_v3[y][i])
 		i++;
-	if (y > j || x > i || x < 0 || y < 0)
-	{
-		printf ("range\n");
+	if (x >= i)
+		return 1;
+	else if (data->map_v3 && data->map_v3[(int)y][(int)x] == '1')
 		return (1);
-	}
-	else if (data->map_v3 && data->map_v3[y][x] == '1')
-	{
-		printf ("wall\n");
-		return (1);
-	}
 	return (0);
 }
 
-void	draw_horizontal_ray(t_picture *data)
+void	draw_horizontal_ray(t_picture *data, float angle)
 {
 	int		i;
 	float	x;
 	float	y;
 	float	rad;
 
-	i = 0;
-	rad = data->deta * M_PI / 180;
+	rad = angle * M_PI / 180;
 	x = data->x_p;
 	y = data->y_p;
+	i = 0;
 	while (i < data->ray_distance_hor)
 	{
 		my_put_pixl(data, x, y, data->color);
@@ -147,17 +143,17 @@ void	draw_horizontal_ray(t_picture *data)
 	}
 }
 
-void	draw_vertical_ray(t_picture *data)
+void	draw_vertical_ray(t_picture *data, float angle)
 {
 	int		i;
 	float	x;
 	float	y;
 	float	rad;
-
-	i = 0;
+	
 	x = data->x_p;
 	y = data->y_p;
-	rad = data->deta * M_PI / 180;
+	rad = angle * M_PI / 180;
+	i = 0;
 	while (i < data->ray_distance_ver)
 	{
 		my_put_pixl(data, x, y, data->color);
@@ -167,135 +163,86 @@ void	draw_vertical_ray(t_picture *data)
 	}
 }
 
-t_picture	*vertical_intersections(t_picture *data, float x, float y)
+t_picture	*vertical_intersections(t_picture *data, float angle, float x, float y)
 {
 	float	rad;
-	int		j;
-	int		i;
-	double coss;
-	rad = data->deta * M_PI / 180;
-	coss = cos(rad);
-	if (data->deta == 90)
-		coss = 0.0;
-	if (coss < 0)
+	
+	rad = angle * M_PI / 180;
+	if (cos(rad) < 0) // player look left
 	{
-		data->tx_ver = (int)data->x_p % 64;
+		data->tx_ver = fmod(data->x_p, 64);
 		data->ty_ver = data->tx_ver * tan(rad);
-		data->ray_distance_ver_store = sqrt(pow(data->tx_ver, 2)
-				+ pow(data->ty_ver, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_ver_store);
-		y = data->y_p - (sin(rad) * data->ray_distance_ver_store);
-		if (is_wall(data, x / 64, y / 64))
-			return (data);
+		data->ray_distance_ver = sqrt(pow(data->tx_ver, 2) + pow(data->ty_ver, 2));
+		x = data->x_p + (cos(rad) * data->ray_distance_ver);
+		y = data->y_p - (sin(rad) * data->ray_distance_ver);
 		data->tx_ver = 64;
 		data->ty_ver = data->tx_ver * tan(rad);
-		data->ray_distance_ver = sqrt(pow(data->tx_ver, 2) + pow(data->ty_ver,
-					2));
-		x = x + cos(rad) * data->ray_distance_ver;
-		y = y - sin(rad) * data->ray_distance_ver;
-		j = 0;
-		while (!is_wall(data, x / 64, y / 64))
+		data->ray_distance_ver = sqrt(pow(data->tx_ver, 2) + pow(data->ty_ver, 2));
+		while (!is_wall(data, (x / 64) - 1, y / 64))
 		{
 			x = x + (cos(rad) * data->ray_distance_ver);
 			y = y - (sin(rad) * data->ray_distance_ver);
-			j++;
 		}
-		data->ray_distance_ver = (data->ray_distance_ver * j)
-			+ data->ray_distance_ver_store;
+		data->ray_distance_ver = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
-	else if (coss >= 0)
+	else if (cos(rad) > 0) // look right 
 	{
-		data->tx_ver = abs((int)data->x_p % 64 - 64);
+		data->tx_ver = 64 - fmod(data->x_p, 64);
 		data->ty_ver = data->tx_ver * tan(rad);
-		data->ray_distance_ver_store = sqrt(pow(data->tx_ver, 2)
-				+ pow(data->ty_ver, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_ver_store);
-		y = data->y_p - (sin(rad) * data->ray_distance_ver_store);
-		if (is_wall(data, x / 64, y / 64))
-			return (data);
+		data->ray_distance_ver = sqrt(pow(data->tx_ver, 2) + pow(data->ty_ver, 2));
+		x = data->x_p + (cos(rad) * data->ray_distance_ver);
+		y = data->y_p - (sin(rad) * data->ray_distance_ver);
 		data->tx_ver = 64;
-		data->ty_ver = data->tx_ver * tan(rad); //64
-		data->ray_distance_ver = sqrt(pow(data->ty_ver, 2) + pow(data->tx_ver,
-					2));
-		x = x + cos(rad) * data->ray_distance_ver;
-		y = y - sin(rad) * data->ray_distance_ver;
-		j = 0;
-		while (!is_wall(data, (x) / 64, (y) / 64))
+		data->ty_ver = data->tx_ver * tan(rad);
+		data->ray_distance_ver = sqrt(pow(data->ty_ver, 2) + pow(data->tx_ver, 2));
+		while (!is_wall(data, (x / 64), (y / 64)))
 		{
 			x = x + (cos(rad) * data->ray_distance_ver);
 			y = y - (sin(rad) * data->ray_distance_ver);
-			j++;
 		}
-		data->ray_distance_ver = (data->ray_distance_ver * j)
-			+ data->ray_distance_ver_store;
-		printf("data->ray_distance_ver: %f\n", data->ray_distance_ver);
+		data->ray_distance_ver = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
 	return (data);
 }
 
-t_picture	*horizontal_intersections(t_picture *data, float x, float y) //done;
+t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float y) //done;
 {
 	float rad;
-	int j;
 
-	rad = data->deta * M_PI / 180;
-	if (sin(rad) < 0)
+	rad = angle * M_PI / 180;
+	if (sin(rad) < 0) // player look down
 	{
-		data->ty_hor = abs((int)data->y_p % 64 - 64);
+		data->ty_hor = 64 - fmod(data->y_p, 64);
 		data->tx_hor = data->ty_hor / tan(rad);
-		data->ray_distance_hor_store = sqrt(pow(data->ty_hor, 2)
-				+ pow(data->tx_hor, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_hor_store);
-		y = data->y_p - (sin(rad) * data->ray_distance_hor_store);
-		if (is_wall(data, x / 64, y / 64))
-			return (data);
+		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
+		x = data->x_p + (cos(rad) * data->ray_distance_hor);
+		y = data->y_p - (sin(rad) * data->ray_distance_hor);
 		data->ty_hor = 64;
 		data->tx_hor = data->ty_hor / tan(rad);
-		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor,
-					2));
-		x = x + cos(rad) * data->ray_distance_hor;
-		y = y - sin(rad) * data->ray_distance_hor;
-		j = 0;
-		printf("x: %d, y: %d\n", (int)x / 64, (int)y / 64);
-		while (!is_wall(data, (x) / 64, y / 64))
+		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
+		while (!is_wall(data, (x / 64), (y / 64)))
 		{
-			x = x + (cos(rad) * data->ray_distance_hor);
-			y = y - (sin(rad) * data->ray_distance_hor);
-			j++;
-			printf("j: %d\n", j);
+			x += (cos(rad) * data->ray_distance_hor);
+			y -= (sin(rad) * data->ray_distance_hor);
 		}
-		data->ray_distance_hor = (data->ray_distance_hor * j)
-			+ data->ray_distance_hor_store;
+		data->ray_distance_hor = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
-	else if (sin(rad) >= 0) //done;
+	else if (sin(rad) > 0) //player look up;
 	{
-		
-		data->ty_hor = (int)data->y_p % 64;
+		data->ty_hor = fmod(data->y_p , 64);
 		data->tx_hor = data->ty_hor / tan(rad);
-		data->ray_distance_hor_store = sqrt(pow(data->tx_hor, 2) //distance of first ray;
-				+ pow(data->ty_hor, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_hor_store);
-		y = data->y_p - (sin(rad) * data->ray_distance_hor_store);
-		if (is_wall(data, x / 64, y / 64))
-			return (data);
+		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
+		x = data->x_p + (cos(rad) * data->ray_distance_hor);
+		y = data->y_p - (sin(rad) * data->ray_distance_hor);
 		data->ty_hor = 64;
-		data->tx_hor = data->ty_hor / tan(rad); //64
-		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor,
-					2)); // distance of seconde ray;
-		x = x + cos(rad) * data->ray_distance_hor;
-		y = y - sin(rad) * data->ray_distance_hor;
-		j = 0;
-		printf("x: %d, y: %d\n", (int)x / 64, (int)y / 64);
-		while (!is_wall(data, x / 64, y / 64))
+		data->tx_hor = data->ty_hor / tan(rad);
+		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2)); // distance of seconde ray;
+		while (!is_wall(data, (x) / 64, (y / 64) - 1))
 		{
-			x = x + (cos(rad) * data->ray_distance_hor);
-			y = y - (sin(rad) * data->ray_distance_hor);
-			j++;
-			printf("j: %d\n", j);
+			x += (cos(rad) * data->ray_distance_hor);
+			y -= (sin(rad) * data->ray_distance_hor);
 		}
-		data->ray_distance_hor = (data->ray_distance_hor * j)
-			+ data->ray_distance_hor_store;
-		printf("data->ray_distance_hor: %f\n", data->ray_distance_hor);
+		data->ray_distance_hor = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
 	return (data);
 }
@@ -305,13 +252,13 @@ void	put_player(t_picture *test, int color)
 	float	rad;
 	float	x;
 	float	y;
-	float	angl;
+	float	angle;
 
-	angl = 0;
+	angle = 0;
 	//draw player;
-	while (angl < 360)
+	while (angle < 360)
 	{
-		rad = angl * M_PI / 180;
+		rad = angle * M_PI / 180;
 		x = test->x_p;
 		y = test->y_p;
 		while ((sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5))
@@ -320,22 +267,21 @@ void	put_player(t_picture *test, int color)
 			x += cos(rad);
 			y -= sin(rad);
 		}
-		angl++;
+		angle++;
 	}
 	//casting rays;
 	test->color = 0x0ff0000; //red;
-	horizontal_intersections(test, x, y);
-	// vertical_intersections(test, x, y);
-	// if (test->ray_distance_hor < test->ray_distance_ver)
-	// {
-	// 	printf("horizontal\n");
-		draw_horizontal_ray(test);
-	// }
-	// else if (test->ray_distance_ver <= test->ray_distance_hor)
-	// {
-	// 	printf("vertical\n");
-		// draw_vertical_ray(test);
-	// }
+	angle = test->deta - 30;
+	while(angle < test->deta + 30)
+	{
+		horizontal_intersections(test, angle, x, y); // just to get distance horizontal
+		vertical_intersections(test, angle, x, y); // just to get distance vertical
+		if (test->ray_distance_hor < test->ray_distance_ver)
+			draw_horizontal_ray(test, angle);
+		else if (test->ray_distance_ver <= test->ray_distance_hor)
+			draw_vertical_ray(test, angle);
+		angle += 64.0 / 640.0;
+	}
 }
 
 void	draw_map(char **map, t_picture *test)
