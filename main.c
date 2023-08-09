@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/09 18:11:33 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:47:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	is_wall(t_picture *data, int x, int y)
 		i++;
 	if (x >= i)
 		return 1;
-	else if (data->map_v3 && data->map_v3[(int)y][(int)x] == '1')
+	else if (data->map_v3 && data->map_v3[y][x] == '1')
 		return (1);
 	return (0);
 }
@@ -185,7 +185,7 @@ t_picture	*vertical_intersections(t_picture *data, float angle, float x, float y
 		}
 		data->ray_distance_ver = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
-	else if (cos(rad) > 0) // look right 
+	else if (cos(rad) >= 0) // look right 
 	{
 		data->tx_ver = 64 - fmod(data->x_p, 64);
 		data->ty_ver = data->tx_ver * tan(rad);
@@ -208,7 +208,7 @@ t_picture	*vertical_intersections(t_picture *data, float angle, float x, float y
 t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float y) //done;
 {
 	float rad;
-
+	
 	rad = angle * M_PI / 180;
 	if (sin(rad) < 0) // player look down
 	{
@@ -227,8 +227,13 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 		}
 		data->ray_distance_hor = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
-	else if (sin(rad) > 0) //player look up;
+	else if (sin(rad) >= 0) //player look up;
 	{
+		if(angle == 0)
+		{
+			data->ray_distance_hor = 100000;
+			return data;
+		}
 		data->ty_hor = fmod(data->y_p , 64);
 		data->tx_hor = data->ty_hor / tan(rad);
 		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
@@ -272,14 +277,21 @@ void	put_player(t_picture *test, int color)
 	//casting rays;
 	test->color = 0x0ff0000; //red;
 	angle = test->deta - 30;
+	int i = 0;
 	while(angle < test->deta + 30)
 	{
 		horizontal_intersections(test, angle, x, y); // just to get distance horizontal
 		vertical_intersections(test, angle, x, y); // just to get distance vertical
 		if (test->ray_distance_hor < test->ray_distance_ver)
+		{
 			draw_horizontal_ray(test, angle);
+			i++;
+		}
 		else if (test->ray_distance_ver <= test->ray_distance_hor)
+		{
 			draw_vertical_ray(test, angle);
+			i++;
+		}
 		angle += 64.0 / 640.0;
 	}
 }
@@ -435,7 +447,7 @@ int	main(int ac, char **av)
 	test->r_left = 0;
 	test->r_right = 0;
 	draw_map(test->map_v3, test);
-	//draw_player(map_v3, test);
+	// put_player(test, test->color);
 	mlx_hook(test->wind, 17, 0, ft_exit, NULL);
 	mlx_hook(test->wind, 2, 0, give_key, test);
 	mlx_hook(test->wind, 3, 0, key_released, test);
