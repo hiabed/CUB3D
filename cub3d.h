@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/09 14:39:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:52:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct creat_picture
 	float	ray_distance_ver_store;
 }			t_picture;
 
-int			is_wall(t_picture *data, int x, int y);
+int			is_wall(t_picture *data, float x, float y);
 void		rotation(t_picture *data);
 void		init_player(char **map, t_picture *test);
 char		*get_next_line(int fd);
