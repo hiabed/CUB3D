@@ -6,40 +6,39 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 12:28:19 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/07 22:51:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/29 20:13:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int i, int j)
 {
-	char	*newstr;
-	int		i;
-	int		j;
+	char	*get;
 
 	if (!s1)
 	{
 		s1 = malloc(1);
-		s1[0]= '\0';
+		if (!s1)
+			return (0);
+		s1[0] = '\0';
 	}
-	if (!s2)
+	get = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!get)
+	{
+		free(s1);
 		return (NULL);
-	newstr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!newstr)
-		return (NULL);
-	i = 0;
+	}
 	while (s1[i])
 	{
-		newstr[i] = s1[i];
+		get[i] = s1[i];
 		i++;
 	}
-	j = 0;
 	while (s2[j])
-		newstr[i++] = s2[j++];
-	newstr[i] = '\0';
+		get[i++] = s2[j++];
+	get[i] = '\0';
 	free(s1);
-	return (newstr);
+	return (get);
 }
 
 char	*ft_read(int fd, char *s)
@@ -61,7 +60,7 @@ char	*ft_read(int fd, char *s)
 			return (0);
 		}
 		ptr[n] = '\0';
-		s = ft_strjoin(s, ptr);
+		s = ft_strjoin(s, ptr, 0, 0);
 	}
 	free(ptr);
 	return (s);

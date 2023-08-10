@@ -154,7 +154,7 @@ void init_var(t_test * test)
 	test->rot_rhit = 0;
 	test->rot_left = 0;
 	test->teta = 90;
-	test->speed = 3;
+	test->speed = 1;
 	test->map = malloc(11*sizeof(char*));
 	test->map[0] = "1111111111";
 	test->map[1] = "1000000001";
