@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 09:37:22 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/10 19:24:47 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:41:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	inital_draw_wall(t_picture *data, char **map)
 		data->ray_distance 	= 0;
 		while (!is_wall(data, x / 64, y / 64, rad)) //check if the ray hit a wall;
 		{
-			x += cos(rad) / 16;
-			y -= sin(rad) / 16;
+			x += cos(rad) / 4;
+			y -= sin(rad) / 4;
 		}
 		data->ray_distance = sqrt(pow(y - data->y_p, 2) + pow(x - data->x_p, 2));
 		angl += (60.0 / 640.0); // 0.09375.
