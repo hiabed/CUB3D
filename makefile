@@ -6,11 +6,13 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/07 16:40:25 by mhassani         ###   ########.fr        #
+#    Updated: 2023/08/10 18:57:58 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
+
+CC = cc -O3
 
 CFLAGS =  -fsanitize=address #-Wall -Wextra -Werror
 
