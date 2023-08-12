@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/11 20:22:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:27:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	is_wall(t_picture *data, float x, float y)
 	i = 0;
 	while (data->map_v3[(int)y] && data->map_v3[(int)y][(int)i])
 		i++;
-	if (x >= i)
+	if (x >= i - 1)
 		return 1;
 	int k = 0;
 	if (data->map_v3[(int)y][(int)x] == '1')
@@ -198,8 +198,8 @@ t_picture	*vertical_intersections(t_picture *data, float angle, float x, float y
 		data->tx_ver = 64 - ((int)data->x_p % 64);
 		data->ty_ver = data->tx_ver * tan(rad);
 		data->ray_distance_ver = sqrt(pow(data->tx_ver, 2) + pow(data->ty_ver, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_ver);
-		y = data->y_p - (sin(rad) * data->ray_distance_ver);
+			x = data->x_p + (cos(rad) * data->ray_distance_ver);
+			y = data->y_p - (sin(rad) * data->ray_distance_ver);
 		data->tx_ver = 64;
 		data->ty_ver = data->tx_ver * tan(rad);
 		data->ray_distance_ver = sqrt(pow(data->ty_ver, 2) + pow(data->tx_ver, 2));
@@ -210,6 +210,7 @@ t_picture	*vertical_intersections(t_picture *data, float angle, float x, float y
 		}
 		data->ray_distance_ver = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
+	// printf("data->ray_distance_ver: %f, x: %f, y: %f\n", data->ray_distance_ver, x, y);
 	return (data);
 }
 
@@ -228,8 +229,8 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 		data->ty_hor = 64 - ((int)(data->y_p) % 64);
 		data->tx_hor = data->ty_hor / tan(rad);
 		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
-		x = data->x_p + (cos(rad) * data->ray_distance_hor);
-		y = data->y_p - (sin(rad) * data->ray_distance_hor);
+			x = data->x_p + (cos(rad) * data->ray_distance_hor);
+			y = data->y_p - (sin(rad) * data->ray_distance_hor);
 		data->ty_hor = 64;
 		data->tx_hor = data->ty_hor / tan(rad);
 		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
@@ -239,10 +240,11 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 			y -= (sin(rad) * data->ray_distance_hor);
 		}
 		data->ray_distance_hor = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
+		// printf("data->ray_distance_hor: %f\n", data->ray_distance_hor);
 	}
 	else if (sin(rad) > 0) //player look up;
 	{
-
+		printf("upppp\n");
 		data->ty_hor = ((int)data->y_p % 64);
 		data->tx_hor = data->ty_hor / tan(rad);
 		data->ray_distance_hor = sqrt(pow(data->tx_hor, 2) + pow(data->ty_hor, 2));
@@ -258,6 +260,7 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 		}
 		data->ray_distance_hor = sqrt(pow(x - data->x_p, 2) + pow(y - data->y_p, 2));
 	}
+	// printf("data->ray_distance_hor: %f, x: %f, y: %f\n", data->ray_distance_hor, x, y);
 	return (data);
 }
 
@@ -287,10 +290,10 @@ void	put_player(t_picture *test, int color)
 	test->color = 0x0ff0000; //red;
 	angle = test->deta - 30;
 	int i = 0;
-	// while(angle < test->deta + 30)
-	// {
-		horizontal_intersections(test, angle, x, y); // just to get distance horizontal
-		vertical_intersections(test, angle, x, y); // just to get distance vertical
+	while(angle < test->deta + 30)
+	{
+		hor_int(test, angle, x, y); // just to get distance horizontal
+		ver_int(test, angle, x, y); // just to get distance vertical
 		if (test->ray_distance_hor <= test->ray_distance_ver)
 		{
 			draw_horizontal_ray(test, angle);
@@ -301,8 +304,8 @@ void	put_player(t_picture *test, int color)
 			draw_vertical_ray(test, angle);
 			i++;
 		}
-	// 	angle += 64.0 / 640.0;
-	// }
+		angle += 64.0 / 640.0;
+	}
 }
 
 void	draw_map(char **map, t_picture *test)
@@ -316,8 +319,8 @@ void	draw_map(char **map, t_picture *test)
 		x = 0;
 		while (map[y][x])
 		{
-			// if (map[y][x] == '1')
-			// 	draw_squar(test, x * 64, y * 64, 0x000000CD);
+			if (map[y][x] == '1')
+				draw_squar(test, x * 64, y * 64, 0x000000CD);
 			if (map[y][x] == '0')
 				draw_squar(test, x * 64, y * 64, 30778801);
 			x++;
@@ -464,3 +467,6 @@ int	main(int ac, char **av)
 	// mlx_loop_hook(test->wind, 2, 0, rotation, test);
 	mlx_loop(test->ptr);
 }
+
+
+

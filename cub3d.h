@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/11 18:08:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:28:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,7 @@ void		move_up(t_picture *data);
 void		move_down(t_picture *data);
 void		move_right(t_picture *data);
 void		move_left(t_picture *data);
+t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
+t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
 
 #endif

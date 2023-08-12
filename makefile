@@ -6,7 +6,7 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/10 18:57:58 by mhassani         ###   ########.fr        #
+#    Updated: 2023/08/12 19:28:25 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = 	main.c \
 		parcing_color.c \
 		parcing_player_texture.c \
 		move_player.c \
+		intersection.c
 
 OBJ = ${SRCS:.c=.o}
 
