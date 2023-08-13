@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/12 19:28:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:06:08 by ayylaaba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ typedef struct creat_data
 
 typedef struct creat_picture
 {
+	int		old_s;
 	t_data	*data;
+	char	dir_h;
+	char	dir_v;
 	char	*map;
 	char	**map_v3;
 	char	**map_v2;
-	double	x_p;
-	double	y_p;
+	float	x_p;
+	float	y_p;
 	float	angl;
 	float	r_left;
 	float	r_right;
@@ -82,6 +85,7 @@ typedef struct creat_picture
 	float	tx_ver;
 	float	ty_ver;
 	float	ray_distance_ver;
+	float	new_ray_distance;
 	float	ray_distance_ver_store;
 }			t_picture;
 

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/12 19:27:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:21:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,12 +264,46 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 	return (data);
 }
 
+void	draw_wall(t_picture * data, int color)
+{
+	double		start;
+	double		end;
+
+	start = 320 - (data->wall_tall / 2);
+	end = start + data->wall_tall;
+
+	while (start < end)
+	{
+		my_put_pixl(data, data->f , start , color);
+		start++;
+	}
+}
+
+void	draw_walls(t_picture * data)
+{
+	int	s;
+
+	s = (data->ray_distance_hor > data->ray_distance_ver);
+	if (data->ray_distance_hor == data->ray_distance_ver)
+		s = data->old_s;
+	data->old_s = s;
+	if (data->dir_v == 'E' && s)
+		draw_wall(data, 0x033ff1);
+	if (data->dir_v == 'W' && s)
+		draw_wall(data, 0xa4b110);
+	if (data->dir_h == 'N' && !s)
+		draw_wall(data, 0xf54fff);
+	if (data->dir_h == 'S' && !s)
+		draw_wall(data, 0xf99f3f);
+}
+
 void	put_player(t_picture *test, int color)
 {
-	float	rad;
-	float	x;
-	float	y;
-	float	angle;
+	double	rad;
+	double	x;
+	double	y;
+	double	angle;
+	double	cur_angl;
 
 	angle = 0;
 	//draw player;
@@ -280,7 +314,7 @@ void	put_player(t_picture *test, int color)
 		y = test->y_p;
 		while ((sqrt(pow(test->x_p - x, 2) + pow(test->y_p - y, 2)) < 5))
 		{
-			my_put_pixl(test, x, y, color);
+			//my_put_pixl(test, x, y, color);
 			x += cos(rad);
 			y -= sin(rad);
 		}
@@ -288,45 +322,55 @@ void	put_player(t_picture *test, int color)
 	}
 	//casting rays;
 	test->color = 0x0ff0000; //red;
-	angle = test->deta - 30;
+	angle = test->deta + 30;
 	int i = 0;
-	while(angle < test->deta + 30)
+	test->f = 0;
+	while (test->f < 640)
 	{
-		hor_int(test, angle, x, y); // just to get distance horizontal
-		ver_int(test, angle, x, y); // just to get distance vertical
-		if (test->ray_distance_hor <= test->ray_distance_ver)
-		{
-			draw_horizontal_ray(test, angle);
-			i++;
-		}
-		else if (test->ray_distance_ver <= test->ray_distance_hor)
-		{
-			draw_vertical_ray(test, angle);
-			i++;
-		}
-		angle += 64.0 / 640.0;
+			hor_int(test, angle, x, y); // just to get distance horizontal
+			ver_int(test, angle, x, y); // just to get distance vertical
+			if (test->ray_distance_hor <= test->ray_distance_ver)
+				i = 1;
+			else if (test->ray_distance_ver <= test->ray_distance_hor)
+				i = 0;
+			cur_angl = (test->deta - angle);
+			if (!i)
+				test->new_ray_distance = test->ray_distance_ver * cos(((cur_angl) * M_PI / 180));
+			else 
+				test->new_ray_distance = test->ray_distance_hor * cos(((cur_angl) * M_PI / 180));
+			test->dist_p_screen	= 320 / tan(30 * M_PI / 180);
+			test->wall_tall	= ((64 / test->new_ray_distance) * test->dist_p_screen);
+			if(test->wall_tall >= 640)
+				test->wall_tall = 640;
+			draw_walls(test);
+			test->f++;
+			angle -= 64.0 / 640.0;
 	}
 }
 
 void	draw_map(char **map, t_picture *test)
 {
-	int	x;
-	int	y;
+	// int	x;
+	// int	y;
+	
 
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '1')
-				draw_squar(test, x * 64, y * 64, 0x000000CD);
-			if (map[y][x] == '0')
-				draw_squar(test, x * 64, y * 64, 30778801);
-			x++;
-		}
-		y++;
-	}
+	// y = 0;
+	// while (map[y])
+	// {
+	// 	x = 0;
+	// 	while (map[y][x])
+	// 	{
+	// 		if (map[y][x] == '1')
+	// 			draw_squar(test, x * 64, y * 64, 0x000000CD);
+	// 		if (map[y][x] == '0')
+	// 			draw_squar(test, x * 64, y * 64, 30778801);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	test->image_adrr = mlx_new_image(test->ptr, 640, 640);
+	test->adrr = mlx_get_data_addr(test->image_adrr, &test->bit_pixl,
+	 		&test->len, &test->end);
 	put_player(test, 0x00FDFD55);
 	//printf ("------> x == %d, y == %d, color == %d\n", test->data->x,
 	//test->data->y, test->data->color);
@@ -339,9 +383,9 @@ int	give_key(int key, t_picture *test)
 		test->r_left = 1;
 	if (key == 124)
 		test->r_right = 1;
-	if (key == 13) //w
+	if (key == 13 || key == 126) //w
 		test->m_up = 1;
-	if (key == 1) //s
+	if (key == 1 || key == 125) //s
 		test->m_down = 1;
 	if (key == 2) //d
 		test->m_left = 1;
@@ -373,9 +417,9 @@ int	key_released(int key, t_picture *test)
 		test->r_left = 0;
 	else if (key == 124)
 		test->r_right = 0;
-	else if (key == 13)
+	else if (key == 13 || key == 126)
 		test->m_up = 0;
-	else if (key == 1)
+	else if (key == 1 || key == 125)
 		test->m_down = 0;
 	else if (key == 2)
 		test->m_left = 0;
