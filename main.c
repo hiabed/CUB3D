@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/13 19:21:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/13 20:55:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,18 +264,66 @@ t_picture	*horizontal_intersections(t_picture *data, float angle, float x, float
 	return (data);
 }
 
+//  struct	s_data {
+// 	void	*tex;
+// 	char	*addr;
+// 	int		bits_per_pixel;
+// 	int		line_length;
+// 	int		endian;
+// 	int w;
+// 	int h;
+// }	;
+
+
+// unsigned int    ft_get_color(t_picture * data, int j, struct s_data * tex)
+// {
+//     int                offset_x;
+//     int                offset_y;
+//     unsigned int    color;
+//     char            *dst;
+
+// 	if (data->ray_distance_hor < data->ray_distance_ver)
+//     	offset_x = ((int )(data->tx_hor + data->ty_hor) % 64) * tex->w / 64;
+// 	else
+//     	offset_x = ((int )(data->tx_ver + data->ty_ver) % 64) * tex->w / 64;
+
+//     offset_y = (j - ((640 / 2) - (data->wall_tall / 2))) * \
+//                     ((float)tex->h / 640);
+			
+//     color = 0;
+//     if (offset_x < tex->w && offset_y < tex->h && offset_x >= 0 \
+//                                             && offset_y >= 0)
+//     {
+//         dst = tex->addr + (offset_y * tex->line_length + offset_x \
+//                                         * (tex->bits_per_pixel / 8));
+//         color = *(unsigned int *)dst;
+//     }
+//     return (color);
+// }
+
 void	draw_wall(t_picture * data, int color)
 {
+	// struct	s_data tex;
 	double		start;
 	double		end;
 
+	// tex.tex = mlx_xpm_file_to_image(data->ptr, "message.xpm", &tex.w, &tex.h);
+	// tex.addr = mlx_get_data_addr(tex.tex, &tex.bits_per_pixel, &tex.line_length, &tex.endian);
 	start = 320 - (data->wall_tall / 2);
 	end = start + data->wall_tall;
+
+	for (int i = 0; i < start; i++) {
+		my_put_pixl(data, data->f , i , 11796550);
+	}
 
 	while (start < end)
 	{
 		my_put_pixl(data, data->f , start , color);
 		start++;
+	}
+
+	for (int i = end; i < 640; i++) {
+		my_put_pixl(data, data->f , i , 7882390);
 	}
 }
 
@@ -340,7 +388,7 @@ void	put_player(t_picture *test, int color)
 				test->new_ray_distance = test->ray_distance_hor * cos(((cur_angl) * M_PI / 180));
 			test->dist_p_screen	= 320 / tan(30 * M_PI / 180);
 			test->wall_tall	= ((64 / test->new_ray_distance) * test->dist_p_screen);
-			if(test->wall_tall >= 640)
+			if(test->wall_tall >= 640) //remove the lag when the wall is bigger than the size of the screen;
 				test->wall_tall = 640;
 			draw_walls(test);
 			test->f++;
