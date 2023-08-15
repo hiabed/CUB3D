@@ -230,12 +230,13 @@ void mov_down(t_test *test)
 	test->y += sin(t_rad) * test->speed;
 }
 
-void rotation(t_test *test)
+int rotation(t_test *test)
 {
 	if (test->rot_left == 1)
 		test->teta += 1;
 	if (test->rot_rhit == 1)
 		test->teta -= 1;
+	return 0;
 }
 
 int motion(t_test *test)
