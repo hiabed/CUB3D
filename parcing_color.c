@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/22 11:21:19 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:00:24 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int     check_number(char *str)
+int     check_number(char *str, char ch, t_picture *data)
 {
     int     i;
     char    **number;
@@ -23,16 +23,27 @@ int     check_number(char *str)
         return (1);
     if (atoi(number[0]) <= 0 || atoi(number[1]) <= 0 || atoi(number[2]) <= 0)
         return (1);
+    if (ch == 'C')
+    {
+        data->c_color = (atoi(number[0]) * 256 * 256) + (atoi(number[1]) * 256) + atoi(number[2]);
+        printf("ceiling color: %d\n", data->c_color);
+    }
+    else if (ch == 'F')
+    {
+        data->f_color = (atoi(number[0]) * 256 * 256) + (atoi(number[1]) * 256) + atoi(number[2]);
+        printf("floor color: %d\n", data->f_color);
+    }
     return (0);
 }
 
-int     check_color(char **map)
+int     check_color(char **map, t_picture *data)
 {
     int     i;
     int     j;
     int     c;
     char    *trim;
     char    *line_content;
+    char    ch;
     
     i = 0;
     c = 0;
@@ -42,6 +53,7 @@ int     check_color(char **map)
         trim = ft_strtrim(map[i], " ");
         if (trim[0] == 'C' || trim[0] == 'F')
         {
+            ch = trim[0];
             line_content = get_content(trim, ' ');
             while (line_content[j])
             {
@@ -49,7 +61,7 @@ int     check_color(char **map)
                     c++;
                 j++;
             }   
-            if (c != 2 || check_number(line_content))
+            if (c != 2 || check_number(line_content, ch, data))
                 return (1);
             c = 0;
         }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/15 19:29:56 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:46:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_imgs
 
 typedef struct creat_picture
 {
+	int c_color;
+	int f_color;
 	int		start;
 	t_imgs	*imgs;
 	int		begin;
@@ -110,8 +112,6 @@ typedef struct creat_picture
 	float	ty;
 }			t_picture;
 
-
-int	is_wall_move(t_picture *data, float x, float y);
 void		init(t_picture *data);
 void		my_put_pixl(t_picture *test, int x, int y, int color);
 void		draw_walls(t_picture *data);
@@ -134,8 +134,8 @@ int			check_map_extantion(char *map);
 int			character(char **map);
 int			check_double_element(char **map);
 int			check_wall_text(char **src);
-int			check_character(char **s);
-int			check_color(char **map);
+int			check_character(char **s, t_picture *data);
+int     check_number(char *str, char ch, t_picture *data);
 int			check_text_ext(char **map);
 char		*get_content(char *str, char c);
 void		move_up(t_picture *data);
@@ -144,5 +144,6 @@ void		move_right(t_picture *data);
 void		move_left(t_picture *data);
 t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
+int     check_color(char **map, t_picture *data);
 
 #endif

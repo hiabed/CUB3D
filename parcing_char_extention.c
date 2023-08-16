@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_char_extention.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/07/22 11:23:05 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:44:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int     character(char **map)
 }
 
 
-int     check_character(char **s)
+int     check_character(char **s, t_picture *data)
 {
     int     i;
     int     j;
     char    *trim;
 
     i = 0;
-    if (check_player_pos(s) || character(s) || check_color(s) || check_text_ext(s)) // add texture handling
+    if (check_player_pos(s) || character(s) || check_color(s, data) || check_text_ext(s)) // add texture handling
         return (1);
     while (s[i])
     {

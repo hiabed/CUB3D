@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/15 21:52:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:53:26 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,8 @@ t_picture	*initialize_structure(int ac, char **av)
 		printf("Error\n");
 		return (NULL);
 	}
+    // test->c_color = 0;
+    // test->f_color = 0;
 	test->move_check = 0;
 	test->m_up = 0;
 	test->m_down = 0;
@@ -332,7 +334,7 @@ int	main(int ac, char **av)
 	t_picture	*test;
 
 	test = initialize_structure(ac, av);
-	if (check_map_extantion(av[1]) || check_character(test->map_v2)
+	if (check_map_extantion(av[1]) || check_character(test->map_v2, test)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
 		ft_perror();
 	init_player(test->map_v3, test);

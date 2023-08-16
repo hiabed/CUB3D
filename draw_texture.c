@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:50:21 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/16 22:58:23 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:02:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	draw_wall(t_picture * data, t_imgs *imgs, int s)
 	float		grid;
 	int		x = 0;
 	float	y = 0;
+	int i = 0;
 
 	grid = imgs->height / data->wall_tall;
 	if (data->wall_tall > 640)
@@ -77,9 +78,11 @@ void	draw_wall(t_picture * data, t_imgs *imgs, int s)
 		x = (int)(imgs->width * (data->tx_hor / 64)) % imgs->width;
 	if (s)
 		x = (int)(imgs->width * (data->ty_ver / 64)) % imgs->width;
-	for(int i = 0; i < data->start ; i++)
+	i = 0;
+	while(i < data->start)
 	{
-		my_put_pixl(data, data->f , i , 150);
+		my_put_pixl(data, data->f , i , data->c_color);
+		i++;
 	}
 	while (data->start < end && data->start < 640)
 	{
@@ -87,8 +90,10 @@ void	draw_wall(t_picture * data, t_imgs *imgs, int s)
 		data->start++;
 		y += grid;
 	}
-	for(int i = end; i < 640 ; i++)
+	i = end;
+	while(i < 640)
 	{
-		my_put_pixl(data, data->f , i , 30);
+		my_put_pixl(data, data->f , i , data->f_color);
+		i++;
 	}
 }
