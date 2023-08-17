@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/16 23:53:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:07:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,21 @@ int	check_text_ext(char **map)
 		{
 			line_content = get_content(trim, ' ');
 			if (!line_content || !line_content[0])
+			{
 				return (1);
+			}
 			ext = ft_strrchr(line_content, '.');
 			ext++;
 			if (ft_strcmp(ext, "xpm"))
+			{
 				return (1);
+			}
 		}
+		free(trim);
+		ft_free(wall_pos);
 		i++;
 	}
+	free(line_content);
 	return (0);
 }
 
@@ -184,19 +191,9 @@ void	put_player(t_picture *test, int color)
 			hor_int(test, angle, x, y); // just to get distance horizontal
 			ver_int(test, angle, x, y); // just to get distance vertical
 			if (test->ray_distance_hor <= test->ray_distance_ver)
-			{
 				i = 1;
-				test->ray_distance = test->ray_distance_hor;
-				test->tx = test->tx_hor;
-				test->ty = test->ty_hor;
-			}
 			else if (test->ray_distance_ver <= test->ray_distance_hor)
-			{
 				i = 0;
-				test->ray_distance = test->ray_distance_ver;
-				test->tx = test->tx_ver;
-				test->ty = test->ty_ver;
-			}
 			cur_angl = (test->deta - angle);
 			if (!i)
 				test->new_ray_distance = test->ray_distance_ver * cos(((cur_angl) * M_PI / 180));
@@ -212,7 +209,6 @@ void	put_player(t_picture *test, int color)
 
 void	draw_map(char **map, t_picture *test)
 {
-
 	put_player(test, 0x00FDFD55);
 	mlx_put_image_to_window(test->ptr, test->wind, test->image_adrr, 0, 0);
 }
@@ -234,7 +230,6 @@ int	give_key(int key, t_picture *test)
 	if (key == 65307) //esc
 	{
 		write(1, "thella ;)\n", 10);
-		free(test);
 		exit(0);
 	}
 	return (0);
@@ -242,7 +237,7 @@ int	give_key(int key, t_picture *test)
 
 int	animate_moves(t_picture *test)
 {
-	test->speed = 0.5;
+	test->speed = 1;
 	rotation(test);
 	move_up(test);
 	move_down(test);
@@ -282,9 +277,7 @@ void	initialize_the_angle_of_player(t_picture *test)
 		while (test->map_v3[j][i])
 		{
 			if (test->map_v3[j][i] == 'N')
-			{
 				test->deta = 90;
-			}
 			else if (test->map_v3[j][i] == 'S')
 				test->deta = 270;
 			else if (test->map_v3[j][i] == 'E')
@@ -311,8 +304,6 @@ t_picture	*initialize_structure(int ac, char **av)
 		printf("Error\n");
 		return (NULL);
 	}
-    // test->c_color = 0;
-    // test->f_color = 0;
 	test->move_check = 0;
 	test->m_up = 0;
 	test->m_down = 0;
@@ -320,7 +311,6 @@ t_picture	*initialize_structure(int ac, char **av)
 	test->m_right = 0;
 	test->r_left = 0;
 	test->r_right = 0;
-	// test->map = ft_strdup(av[1]);
 	fd = open(av[1], O_RDONLY);
 	map_content = get_next_line(fd);
 	test->map_v2 = ft_split(map_content, '\n');
@@ -338,6 +328,7 @@ int	main(int ac, char **av)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
 		ft_perror();
 	init_player(test->map_v3, test);
+	// exit(0);
 	test->ptr = mlx_init();
 	test->wind = mlx_new_window(test->ptr, 640, 640, "cub3d");
 	test->image_adrr = mlx_new_image(test->ptr, 640, 640);

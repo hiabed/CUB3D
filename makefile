@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+         #
+#    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/15 19:10:01 by ayylaaba         ###   ########.fr        #
+#    Updated: 2023/08/17 18:15:25 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME = cub3d
 #CC = cc -O3
 CC = clang
 
-MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz #-fsanitize=address
+MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -g3 #-Wall -Wextra -Werror 
 
 SRCS = 	main.c \
 		get_next_line.c	\

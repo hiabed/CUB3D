@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:44:57 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/07 22:53:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:06:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int     check_double_element(char **map)
             else if (!ft_strcmp(a[0], "F") || !ft_strcmp(a[0], "C"))
                 count4++;
         }
+        ft_free(a);
+        free(trim);
         i++;
     }
     if (count + count1 + count2 + count3 == 4 && count4 == 2)
@@ -99,9 +101,12 @@ int     check_wall_text(char **src)
             count2++;
         else if (trim[0] == 'S' && trim[1] == 'O')
             count3++;
+        free(trim);
         i++;
     }
     if (count + count1 + count2 + count3 == 4)
+    {
         return (0);
+    }
     return (1);
 }

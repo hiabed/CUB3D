@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/16 23:44:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:05:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int     check_player_pos(char **str)
         i++;
     }
     if (count == 1)
+    {
+        free(trim);
         return (0);
+    }
+    free(trim);
     return (1);
 }
 
@@ -77,13 +81,17 @@ int     character(char **map)
                 if (map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'N' || map[i][j] == 'S')
                 {
                     if (player_space(map, i, j))
+                    {
+                        free(trim);
                         return (1);
+                    }
                 }
                 j++;
             }
         }
         i++;
-    } 
+    }
+    free(trim);
     return (0);
 }
 
@@ -100,7 +108,6 @@ int     check_character(char **s, t_picture *data)
     while (s[i])
     {
         trim = ft_strtrim(s[i], " ");
-       //     printf ("trim === %s\n", trim);
         if (trim[0] == '1')
         {
             j = 0;
@@ -109,13 +116,18 @@ int     check_character(char **s, t_picture *data)
                 if (s[i][j] == '0')
                 {
                     if (s[i][j - 1] == ' ' || s[i][j + 1] == ' ')
+                    {
                         return (1);
+                    }
                     else if (s[i - 1][j] == ' ' || s[i + 1][j] == ' ')
+                    {
                         return (1);
+                    }
                 }
                 j++;
             }
         }
+        free(trim);
         i++;
     }
     return (0);

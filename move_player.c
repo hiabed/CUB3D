@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/15 21:50:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,10 @@ void	rotation(t_picture *data)
         data->deta = 0;
 	if (data->r_left)
 	{
-		data->deta += 0.5;
+		data->deta += 1;
 	}
 	else if (data->r_right)
 	{
-		data->deta -= 0.5;
+		data->deta -= 1;
 	}
 }

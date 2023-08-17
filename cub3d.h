@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 00:03:30 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:56:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct s_imgs
 
 typedef struct creat_picture
 {
+	t_imgs	*imgs;
 	int c_color;
 	int f_color;
 	int		start;
-	t_imgs	*imgs;
 	int		begin;
 	int		old_s;
 	t_data	*data;
@@ -145,5 +145,6 @@ void		move_left(t_picture *data);
 t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
 int     check_color(char **map, t_picture *data);
+char	**ft_free(char **s);
 
 #endif
