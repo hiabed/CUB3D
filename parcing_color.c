@@ -6,11 +6,38 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 21:03:22 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:39:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	result;
+	int	sign;
+
+	i = 0;
+	result = 0;
+	sign = 1;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'
+		|| str[i] == '\r' || str[i] == '\n' || str[i] == '\v')
+		i++;
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		result = result * 10 + str[i] - '0';
+		i++;
+	}
+	return (sign * result);
+}
 
 int     check_number(char *str, char ch, t_picture *data)
 {
@@ -19,12 +46,12 @@ int     check_number(char *str, char ch, t_picture *data)
     number = ft_split(str, ',');
     if (!ft_isdigit(number[0]) || !ft_isdigit(number[1]) || !ft_isdigit(number[2]))
         return (1);
-    if (atoi(number[0]) <= 0 || atoi(number[1]) <= 0 || atoi(number[2]) <= 0)
+    if (ft_atoi(number[0]) <= 0 || ft_atoi(number[1]) <= 0 || ft_atoi(number[2]) <= 0)
         return (1);
     if (ch == 'C')
-        data->c_color = (atoi(number[0]) * 256 * 256) + (atoi(number[1]) * 256) + atoi(number[2]);
+        data->c_color = (ft_atoi(number[0]) * 256 * 256) + (ft_atoi(number[1]) * 256) + ft_atoi(number[2]);
     else if (ch == 'F')
-        data->f_color = (atoi(number[0]) * 256 * 256) + (atoi(number[1]) * 256) + atoi(number[2]);
+        data->f_color = (ft_atoi(number[0]) * 256 * 256) + (ft_atoi(number[1]) * 256) + ft_atoi(number[2]);
     ft_free(number);
     return (0);
 }
@@ -58,11 +85,11 @@ int     check_color(char **map, t_picture *data)
             {
                 return (1);
             }
+            free(line_content);
             c = 0;
         }
         free(trim);
         i++;
     }
-    free(line_content);
     return (0);
 }

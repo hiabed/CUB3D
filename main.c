@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 21:07:33 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:39:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ int	check_text_ext(char **map)
 			{
 				return (1);
 			}
+			free(line_content);
 		}
 		free(trim);
 		ft_free(wall_pos);
 		i++;
 	}
-	free(line_content);
 	return (0);
 }
 
@@ -327,8 +327,8 @@ int	main(int ac, char **av)
 	if (check_map_extantion(av[1]) || check_character(test->map_v2, test)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
 		ft_perror();
-	init_player(test->map_v3, test);
 	// exit(0);
+	init_player(test->map_v3, test);
 	test->ptr = mlx_init();
 	test->wind = mlx_new_window(test->ptr, 640, 640, "cub3d");
 	test->image_adrr = mlx_new_image(test->ptr, 640, 640);

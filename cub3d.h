@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 18:56:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:14:50 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_imgs
 	void	*img;
 	int		width;
 	int		height;
-	char	*img_color;
 	char	*add;
 	int		line;
 	int		bits;

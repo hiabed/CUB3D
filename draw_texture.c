@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:50:21 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 19:20:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:14:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	draw_walls(t_picture *data)
 		draw_wall(data, &data->imgs[0], 0);
 	if (data->dir_h == 'S' && !s)
 		draw_wall(data, &data->imgs[3], 0);
-	
 }
 
 void	draw_wall(t_picture * data, t_imgs *imgs, int s)

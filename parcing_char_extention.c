@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 21:05:08 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:40:07 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ int     check_player_pos(char **str)
                 count++;
             j++;
         }
+        free(trim);
         i++;
     }
     if (count == 1)
     {
-        free(trim);
         return (0);
     }
-    free(trim);
     return (1);
 }
 
@@ -82,16 +81,15 @@ int     character(char **map)
                 {
                     if (player_space(map, i, j))
                     {
-                        free(trim);
                         return (1);
                     }
                 }
                 j++;
             }
         }
+        free(trim);
         i++;
     }
-    free(trim);
     return (0);
 }
 
