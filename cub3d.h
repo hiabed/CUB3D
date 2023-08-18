@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 01:45:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 23:09:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -23,11 +24,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2147
 # endif
-
-# ifndef M_PI
-# define M_PI 3.14
-# endif
-
 
 typedef struct creat_data
 {
@@ -109,8 +105,14 @@ typedef struct creat_picture
 	float	ray_distancee;
 	float	tx;
 	float	ty;
+	char 	*north_xpm;
+	char 	*south_xpm;
+	char 	*east_xpm;
+	char 	*west_xpm;
+	char 	*hold_path;
 }			t_picture;
 
+int check_text_ext(char **map, t_picture *data);
 void		init(t_picture *data);
 void		my_put_pixl(t_picture *test, int x, int y, int color);
 void		draw_walls(t_picture *data);
@@ -135,7 +137,6 @@ int			check_double_element(char **map);
 int			check_wall_text(char **src);
 int     	check_character(char **s, char **s2, t_picture *data);
 int     	check_number(char *str, char ch, t_picture *data);
-int			check_text_ext(char **map);
 char		*get_content(char *str, char c);
 void		move_up(t_picture *data);
 void		move_down(t_picture *data);

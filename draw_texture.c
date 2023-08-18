@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:50:21 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 02:21:42 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 03:32:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	init(t_picture *data)
 {
 	int i =0;
 	data->imgs = malloc(4*sizeof(t_imgs));
-	data->imgs[0].img = mlx_xpm_file_to_image(data->ptr, "./texture/north.xpm", &data->imgs[0].width, &data->imgs[0].height);
+	data->imgs[0].img = mlx_xpm_file_to_image(data->ptr, data->north_xpm, &data->imgs[0].width, &data->imgs[0].height);
 	if (!data->imgs[0].img)
 		ft_perror("can't load the image\n");
 	data->imgs[0].add = mlx_get_data_addr(data->imgs[0].img, &data->imgs[0].bits, &data->imgs[0].line, &data->imgs[0].wa33);
-	data->imgs[1].img = mlx_xpm_file_to_image(data->ptr, "./texture/east.xpm", &data->imgs[1].width, &data->imgs[1].height);
+	data->imgs[1].img = mlx_xpm_file_to_image(data->ptr, data->east_xpm, &data->imgs[1].width, &data->imgs[1].height);
 	if (!data->imgs[1].img)
 		ft_perror("can't load the image\n");
 	data->imgs[1].add = mlx_get_data_addr(data->imgs[1].img, &data->imgs[1].bits, &data->imgs[1].line, &data->imgs[1].wa33);
-	data->imgs[2].img = mlx_xpm_file_to_image(data->ptr, "./texture/west.xpm", &data->imgs[2].width, &data->imgs[2].height);
+	data->imgs[2].img = mlx_xpm_file_to_image(data->ptr, data->west_xpm, &data->imgs[2].width, &data->imgs[2].height);
 	if (!data->imgs[2].img)
 		ft_perror("can't load the image\n");
 	data->imgs[2].add = mlx_get_data_addr(data->imgs[2].img, &data->imgs[2].bits, &data->imgs[2].line, &data->imgs[2].wa33);
-	data->imgs[3].img = mlx_xpm_file_to_image(data->ptr, "./texture/south.xpm", &data->imgs[3].width, &data->imgs[3].height);
+	data->imgs[3].img = mlx_xpm_file_to_image(data->ptr, data->south_xpm, &data->imgs[3].width, &data->imgs[3].height);
 	if (!data->imgs[3].img)
 		ft_perror("can't load the image\n");
 	data->imgs[3].add = mlx_get_data_addr(data->imgs[3].img, &data->imgs[3].bits, &data->imgs[3].line, &data->imgs[3].wa33);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 02:13:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:32:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ char	*get_content(char *str, char c)
 	return (content);
 }
 
-int check_text_ext(char **map)
+
+
+int check_text_ext(char **map, t_picture *data)
 {
 	int i;
 	char *trim;
@@ -68,6 +70,7 @@ int check_text_ext(char **map)
 	char *line_content;
 
 	i = 0;
+	int j = 0;
 	while (map[i])
 	{
 		trim = ft_strtrim(map[i], " ");
@@ -76,6 +79,15 @@ int check_text_ext(char **map)
 			|| !ft_strcmp(wall_pos[0], "SO") || !ft_strcmp(wall_pos[0], "EA"))
 		{
 			line_content = get_content(trim, ' ');
+			printf ("%s\n", line_content);
+			if(!ft_strcmp(wall_pos[0], "NO"))
+				data->north_xpm = ft_strdup(line_content);
+			if(!ft_strcmp(wall_pos[0], "SO"))
+				data->south_xpm = ft_strdup(line_content);
+			if(!ft_strcmp(wall_pos[0], "EA"))
+				data->east_xpm = ft_strdup(line_content);
+			if(!ft_strcmp(wall_pos[0], "WE"))
+				data->west_xpm = ft_strdup(line_content);
 			if (!line_content || !line_content[0])
 				return (1);
 			ext = ft_strrchr(line_content, '.');
@@ -233,7 +245,7 @@ int	give_key(int key, t_picture *test)
 
 int	animate_moves(t_picture *test)
 {
-	test->speed = 1;
+	test->speed = 1.5;
 	rotation(test);
 	move_up(test);
 	move_down(test);
@@ -322,16 +334,17 @@ int	main(int ac, char **av)
 	test = initialize_structure(ac, av);
 	if (check_map_extantion(av[1]) || check_character(test->map_v2, test->map_v3, test)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
-		{
-			if (check_map_extantion(av[1]))
-				ft_perror("extenion Is Not Valid\n");
-			if (check_wall_text(test->map_v2))
-				ft_perror("Texture Is Not Valid\n");
-			if (check_double_element(test->map_v2))
-				ft_perror("Texture Is Duplicat\n");
-			if (check_character(test->map_v2, test->map_v3, test))
-				ft_perror("Error space around '0'\n");
-		}
+	{
+		if (check_map_extantion(av[1]))
+			ft_perror("extenion Is Not Valid\n");
+		if (check_wall_text(test->map_v2))
+			ft_perror("Texture Is Not Valid\n");
+		if (check_double_element(test->map_v2))
+			ft_perror("Texture Is Duplicat\n");
+		if (check_character(test->map_v2, test->map_v3, test))
+			ft_perror("Error space around '0'\n");
+	}
+	// printf ("pic_value == %s\n", test->north_xpm);
 	init_player(test->map_v3, test);
 	test->ptr = mlx_init();
 	test->wind = mlx_new_window(test->ptr, 640, 640, "cub3d");
@@ -339,7 +352,7 @@ int	main(int ac, char **av)
 	test->adrr = mlx_get_data_addr(test->image_adrr, &test->bit_pixl,
 			&test->len, &test->end);
 	if (!test->adrr)
-		ft_perror("123\n");
+		ft_perror("Error\n");
 	test->r_left = 0;
 	test->r_right = 0;
 	init(test);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 01:53:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:27:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int     player_space( char **map, int i, int j)
         return (1);
     return (0);
 }
-
 int     check_player_pos(char **str)
 {
     int i;
@@ -106,17 +105,19 @@ int    front_end_wall(char *str)
 }
 int     check_wall(char **map)
 {
-    int i;
-    int j;
+    int     i;
+    int     j;
+    char    *trim;
 
     j = 0;
     i = 0;
+    
     while (map[j]) // wall first and last char
     {
-        if (map[j][0] != '1' || map[j][ft_strlen(map[j]) - 1] != '1')
-        {
+        trim = ft_strtrim(map[j], " ");
+        // trim = ft_strtrim(map[j], "\t");
+        if (trim[0] != '1' || trim[ft_strlen(trim) - 1] != '1')
             return (1);
-        }
         j++;
     }
     i = 0;
@@ -137,7 +138,7 @@ int     check_character(char **s, char **s2, t_picture *data)
     i = 0;
     if (check_wall(s2))
         ft_perror("Wall Is Not Valid\n");
-    if (check_player_pos(s) || character(s2) || check_color(s, data) || check_text_ext(s)) // add texture handling
+    if (check_player_pos(s) || character(s2) || check_color(s, data) || check_text_ext(s, data)) // add texture handling
     {
         if (check_player_pos(s))
             ft_perror("Issue In Player\n");

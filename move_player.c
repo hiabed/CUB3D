@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:32:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,18 @@ void	move_up(t_picture *data)
     {
         data->x_p += cos(data->ray_pos) * data->speed;
         data->y_p -= sin(data->ray_pos) * data->speed;
+        return ;
     }
+    // else if (!is_wall(data, data->x_p / 64, y / 64))
+    // {
+    //     data->y_p -= sin(data->ray_pos) * data->speed;
+    //     return ;
+    // }
+    // else if (!is_wall(data, x / 64, data->y_p / 64))
+    // {
+    //     data->x_p += cos(data->ray_pos) * data->speed;
+    //     return ;
+    // }
 }
 
 void	move_down(t_picture *data)
@@ -125,10 +136,10 @@ void	rotation(t_picture *data)
         data->deta = 0;
 	if (data->r_left)
 	{
-		data->deta += 1;
+		data->deta += 1.5;
 	}
 	else if (data->r_right)
 	{
-		data->deta -= 1;
+		data->deta -= 1.5;
 	}
 }

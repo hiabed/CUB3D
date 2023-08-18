@@ -6,23 +6,23 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 01:45:58 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:45:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
 	int	i;
-	int	result;
-	int	sign;
+	long long	result;
+	long long	sign;
 
 	i = 0;
 	result = 0;
 	sign = 1;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'
-		|| str[i] == '\r' || str[i] == '\n' || str[i] == '\v')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'
+		|| str[i] == '\r' || str[i] == '\n' || str[i] == '\v'))
 		i++;
 	if (str[i] == '-')
 	{
@@ -46,12 +46,13 @@ int     check_number(char *str, char ch, t_picture *data)
 
     number = ft_split(str, ',');
     if (!ft_isdigit(number[0]) || !ft_isdigit(number[1]) || !ft_isdigit(number[2]))
-        return (1);
-    if (ft_atoi(number[0]) <= 0 || ft_atoi(number[1]) <= 0 || ft_atoi(number[2]) <= 0)
-        return (1);
+        ft_perror("Is Not Valid RGB\n");
+    if (ft_atoi(number[0]) < 0 || ft_atoi(number[1]) < 0 || ft_atoi(number[2]) < 0)
+        ft_perror("Is Not Valid RGB\n");
     while (i < 3)
     {
-        if (!(ft_atoi(number[i]) >= 0 && ft_atoi(number[i]) <= 255))
+        if (!(ft_atoi(number[i]) >= 0 && ft_atoi(number[i]) <= 255) 
+            && (ft_atoi(number[i]) > INT_MAX))
             ft_perror("Is Not Valid RGB\n");
         i++;
     }
