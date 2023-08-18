@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 21:14:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 01:45:26 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ int			ft_strcmp(char *s1, char *s2);
 char		*ft_strtrim(char *s1, char *set);
 int			ft_isdigit(char *str);
 char		*ft_strrchr(char *s, int c);
-void		ft_perror(void);
+void 		ft_perror(char *s);
 int			check_map_extantion(char *map);
 int			character(char **map);
 int			check_double_element(char **map);
 int			check_wall_text(char **src);
-int			check_character(char **s, t_picture *data);
-int     check_number(char *str, char ch, t_picture *data);
+int     	check_character(char **s, char **s2, t_picture *data);
+int     	check_number(char *str, char ch, t_picture *data);
 int			check_text_ext(char **map);
 char		*get_content(char *str, char c);
 void		move_up(t_picture *data);
@@ -143,7 +143,7 @@ void		move_right(t_picture *data);
 void		move_left(t_picture *data);
 t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
-int     check_color(char **map, t_picture *data);
+int     	check_color(char **map, t_picture *data);
 char	**ft_free(char **s);
 
 #endif

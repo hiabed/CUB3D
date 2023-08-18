@@ -6,15 +6,15 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 21:39:57 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/18 02:13:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_perror(void)
+void ft_perror(char *s)
 {
-	write(2, "ERROR\n", 6);
+	write(2, s, ft_strlen(s));
 	exit(1);
 }
 
@@ -59,33 +59,29 @@ char	*get_content(char *str, char c)
 	return (content);
 }
 
-int	check_text_ext(char **map)
+int check_text_ext(char **map)
 {
-	int		i;
-	char	*trim;
-	char	*ext;
-	char	**wall_pos;
-	char	*line_content;
+	int i;
+	char *trim;
+	char *ext;
+	char **wall_pos;
+	char *line_content;
 
 	i = 0;
 	while (map[i])
 	{
 		trim = ft_strtrim(map[i], " ");
 		wall_pos = ft_split(trim, ' ');
-		if (!ft_strcmp(wall_pos[0], "NO") || !ft_strcmp(wall_pos[0], "WE")
+		if (!ft_strcmp(wall_pos[0], "NO") || !ft_strcmp(wall_pos[0], "WE") 
 			|| !ft_strcmp(wall_pos[0], "SO") || !ft_strcmp(wall_pos[0], "EA"))
 		{
 			line_content = get_content(trim, ' ');
 			if (!line_content || !line_content[0])
-			{
 				return (1);
-			}
 			ext = ft_strrchr(line_content, '.');
 			ext++;
 			if (ft_strcmp(ext, "xpm"))
-			{
 				return (1);
-			}
 			free(line_content);
 		}
 		free(trim);
@@ -298,7 +294,7 @@ t_picture	*initialize_structure(int ac, char **av)
 
 	test = malloc(sizeof(t_picture));
 	if (ac != 2)
-		ft_perror();
+		ft_perror("wrong argment\n");
 	if (!test)
 	{
 		printf("Error\n");
@@ -324,23 +320,33 @@ int	main(int ac, char **av)
 	t_picture	*test;
 
 	test = initialize_structure(ac, av);
-	if (check_map_extantion(av[1]) || check_character(test->map_v2, test)
+	if (check_map_extantion(av[1]) || check_character(test->map_v2, test->map_v3, test)
 		|| check_wall_text(test->map_v2) || check_double_element(test->map_v2))
-		ft_perror();
-	// exit(0);
+		{
+			if (check_map_extantion(av[1]))
+				ft_perror("extenion Is Not Valid\n");
+			if (check_wall_text(test->map_v2))
+				ft_perror("Texture Is Not Valid\n");
+			if (check_double_element(test->map_v2))
+				ft_perror("Texture Is Duplicat\n");
+			if (check_character(test->map_v2, test->map_v3, test))
+				ft_perror("Error space around '0'\n");
+		}
 	init_player(test->map_v3, test);
 	test->ptr = mlx_init();
 	test->wind = mlx_new_window(test->ptr, 640, 640, "cub3d");
 	test->image_adrr = mlx_new_image(test->ptr, 640, 640);
 	test->adrr = mlx_get_data_addr(test->image_adrr, &test->bit_pixl,
 			&test->len, &test->end);
+	if (!test->adrr)
+		ft_perror("123\n");
 	test->r_left = 0;
 	test->r_right = 0;
 	init(test);
 	draw_map(test->map_v3, test);
 	put_player(test, test->color);
-	test->image_adrr = mlx_new_image(test->ptr, 640, 640);
-	test->adrr = mlx_get_data_addr(test->image_adrr, &test->bit_pixl,&test->len, &test->end);
+	// test->image_adrr = mlx_new_image(test->ptr, 640, 640);
+	// test->adrr = mlx_get_data_addr(test->image_adrr, &test->bit_pixl,&test->len, &test->end);
 	mlx_hook(test->wind, 17, 0, ft_exit, NULL);
 	mlx_hook(test->wind, 2, 3, give_key, test);
 	mlx_hook(test->wind, 3, 0, key_released, test);
