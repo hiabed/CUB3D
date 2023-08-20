@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 19:25:37 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:39:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int     player_space( char **map, int i, int j)
 {
     if (map[i + 1][j] == ' ')
         return (1);
-    else if (map[i  - 1][j] == ' ')
+    else if (map[i - 1][j] == ' ')
         return (1);
     else if (map[i][j + 1] == ' ')
         return (1);
-    else if (map[i + 1][j - 1] == ' ')
+    else if (map[i][j - 1] == ' ')
         return (1);
     return (0);
 }
@@ -58,33 +58,22 @@ int     character(char **map)
 {
     int     i;
     int     j;
-    char    *trim;
 
     i = -1;
     while (map[++i])
     {
-        j = -1;
-        trim = ft_strtrim(map[i], " ");
-        if (trim[0] == '1')
+        j = 0;
+        while (map[i][j])
         {
-            while (map[i][++j])
+            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'W' && map[i][j] != 'E' && map[i][j] != ' ' && map[i][j] != 'N' && map[i][j] != 'S')
+                return (1);
+            if (map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'N' || map[i][j] == 'S')
             {
-                if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'W' && map[i][j] != 'E' && map[i][j] != ' ' && map[i][j] != 'N' && map[i][j] != 'S')
-                {
-                    free (trim);
+                if (player_space(map, i, j))
                     return (1);
-                }
-                if (map[i][j] == 'W' || map[i][j] == 'E' || map[i][j] == 'N' || map[i][j] == 'S')
-                {
-                    if (player_space(map, i, j))
-                    {
-                        free(trim);
-                        return (1);
-                    }
-                }
             }
+            j++;
         }
-        free(trim);
     }
     return (0);
 }
@@ -98,8 +87,14 @@ int    front_end_wall(char *str)
     trim = ft_strtrim(str, " ");
     while (trim[i])
     {
-        if (trim[i] != '1')
+        printf ("c == %c  \n", trim[i]);
+        if(trim[i] == ' ')
+            i++;
+        else if (trim[i] != '1')
+        {
+            free(trim);
             return (1);
+        }
         i++;
     }
     free(trim);
@@ -113,7 +108,6 @@ int     check_wall(char **map)
 
     j = 0;
     i = 0;
-    
     while (map && map[j]) // wall first and last char
     {
         trim = ft_strtrim(map[j], " ");
@@ -129,6 +123,7 @@ int     check_wall(char **map)
     while (map[i])
         i++;
     i--;
+    printf ("%s, last = %s\n", map[0], map[i]);
     if (front_end_wall(map[0]) || front_end_wall(map[i]))
         return (1);
     return (0);

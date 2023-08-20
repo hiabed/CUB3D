@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/19 16:46:25 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/20 20:21:11 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ long long	ft_atoi(const char *str)
 	i = 0;
 	result = 0;
 	sign = 1;
+    if (!str || !str[0])
+       return (0);
 	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\f'
 		|| str[i] == '\r' || str[i] == '\n' || str[i] == '\v'))
 		i++;

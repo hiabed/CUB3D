@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:27:12 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 19:23:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:40:48 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_new_line(char *str)
 void	ft_check_errors(char *map_content, t_picture *test, char **av)
 {
 	test->map_v2 = ft_split(map_content, '\n');
-	if (!test->map_v2)
+	if ((!test->map_v2 || !test->map_v2[0]))
 		ft_perror("Empty map\n");
 	test->map_v3 = test->map_v2 + 6;
 	if (check_map_extantion(av[1]) || check_character(test->map_v2, test->map_v3, test)

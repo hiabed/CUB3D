@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:06:29 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/17 20:52:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 20:17:31 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_isdigit(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		if (!(s[i] >= 48) || !(s[i] <= 57))
 			return (0);

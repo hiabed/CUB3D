@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 02:22:23 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 20:14:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,12 @@ void		move_left(t_picture *data);
 t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
 int     	check_color(char **map, t_picture *data);
-char	**ft_free(char **s);
-void	draw_horizontal_ray(t_picture *data, float angle);
-void	draw_vertical_ray(t_picture *data, float angle);
+char		**ft_free(char **s);
+void		draw_horizontal_ray(t_picture *data, float angle);
+void		draw_vertical_ray(t_picture *data, float angle);
 t_picture	*initialize_structure(int ac, char **av);
-void	initialize_the_angle_of_player(t_picture *test);
-void	ft_check_errors(char *map_content, t_picture *test, char **av);
+void		initialize_the_angle_of_player(t_picture *test);
+void		ft_check_errors(char *map_content, t_picture *test, char **av);
 void ft_perror(char *s);
 int	ft_exit(void);
 void	check_new_line(char *str);
