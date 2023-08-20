@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:35:05 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:29:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:11:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ void	move_down(t_picture *data)
 	double	x;
 	double	y;
 
-	x = 0.0;
-	y = 0.0;
 	data->ray_pos = (data->deta) * M_PI / 180;
-	x -= cos(data->ray_pos) * data->speed;
-	y += sin(data->ray_pos) * data->speed;
+	x = data->x_p - cos(data->ray_pos) * data->speed;
+	y = data->y_p + sin(data->ray_pos) * data->speed;
 	if (!data->m_down)
 		return ;
 	if (!ft_check_move(data, x, y))

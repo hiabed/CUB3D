@@ -6,11 +6,30 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 12:28:19 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:00:22 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:14:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	size_t	i;
+	char	*p;
+
+	if (size && count > SIZE_MAX / size)
+		return (NULL);
+	i = 0;
+	p = malloc(count * size);
+	if (!p)
+		return (NULL);
+	while (i < count * size)
+	{
+		p[i] = 0;
+		i++;
+	}
+	return (p);
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -19,10 +38,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 
 	if (!s1)
-	{
-		s1 = malloc(1);
-		s1[0] = '\0';
-	}
+		s1 = ft_calloc(1, 1);
 	if (!s2)
 		return (NULL);
 	newstr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));

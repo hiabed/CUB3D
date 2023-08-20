@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:06:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:08:11 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,45 @@ long long	ft_atoi(const char *str)
 	return (sign * result);
 }
 
+void	check_color_number(char **n)
+{
+	if (!ft_isdigit(n[0]) || !ft_isdigit(n[1])
+		|| !ft_isdigit(n[2]))
+	{
+		ft_free(n);
+		ft_perror("Is Not Valid RGB\n");
+	}
+	if (ft_atoi(n[0]) < 0 || ft_atoi(n[1]) < 0
+		|| ft_atoi(n[2]) < 0)
+	{
+		ft_free(n);
+		ft_perror("Is Not Valid RGB\n");
+	}
+}
+
 int	check_number(char *str, char ch, t_picture *data)
 {
-	char	**number;
-	int		i;
+	char	**n;
 
-	i = 0;
-	number = ft_split(str, ',');
-	if (!ft_isdigit(number[0]) || !ft_isdigit(number[1])
-		|| !ft_isdigit(number[2]))
+	data->d->j = -1;
+	n = ft_split(str, ',');
+	check_color_number(n);
+	while (++data->d->j < 3)
 	{
-		ft_free(number);
-		ft_perror("Is Not Valid RGB\n");
-	}
-	if (ft_atoi(number[0]) < 0 || ft_atoi(number[1]) < 0
-		|| ft_atoi(number[2]) < 0)
-	{
-		ft_free(number);
-		ft_perror("Is Not Valid RGB\n");
-	}
-	while (i < 3)
-	{
-		if (!(ft_atoi(number[i]) >= 0 && ft_atoi(number[i]) <= 255)
-			|| (ft_atoi(number[i]) > INT_MAX))
+		if (!(ft_atoi(n[data->d->j]) >= 0 && ft_atoi(n[data->d->j]) <= 255)
+			|| (ft_atoi(n[data->d->j]) > INT_MAX))
 		{
-			ft_free(number);
+			ft_free(n);
 			ft_perror("Is Not Valid RGB\n");
 		}
-		i++;
 	}
 	if (ch == 'C')
-		data->c_color = (ft_atoi(number[0]) * 256 * 256) + (ft_atoi(number[1])
-				* 256) + ft_atoi(number[2]);
+		data->c_color = (ft_atoi(n[0]) * 256 * 256) + (ft_atoi(n[1])
+				* 256) + ft_atoi(n[2]);
 	else if (ch == 'F')
-		data->f_color = (ft_atoi(number[0]) * 256 * 256) + (ft_atoi(number[1])
-				* 256) + ft_atoi(number[2]);
-	ft_free(number);
+		data->f_color = (ft_atoi(n[0]) * 256 * 256) + (ft_atoi(n[1])
+				* 256) + ft_atoi(n[2]);
+	ft_free(n);
 	return (0);
 }
 
@@ -100,37 +103,29 @@ int	comma(char *str)
 
 int	check_color(char **map, t_picture *data)
 {
-	int		i;
-	int		j;
-	char	*trim;
-	char	*line_content;
-	char	ch;
-
-	i = 0;
-	while (map[i])
+	data->d->i = -1;
+	while (map[++data->d->i])
 	{
-		j = 0;
-		trim = ft_strtrim(map[i], " ");
-		if (trim[0] == 'C' || trim[0] == 'F')
+		data->s->trim = ft_strtrim(map[data->d->i], " ");
+		if (data->s->trim[0] == 'C' || data->s->trim[0] == 'F')
 		{
-			ch = trim[0];
-			line_content = get_content(trim, ' ');
-			if (comma(line_content))
+			data->s->ch = data->s->trim[0];
+			data->s->line_content = get_content(data->s->trim, ' ');
+			if (comma(data->s->line_content))
 			{
-				free(line_content);
-				free(trim);
+				free(data->s->line_content);
+				free(data->s->trim);
 				ft_perror("more than comma in RGB\n");
 			}
-			if (check_number(line_content, ch, data))
+			if (check_number(data->s->line_content, data->s->ch, data))
 			{
-				free(line_content);
-				free(trim);
+				free(data->s->line_content);
+				free(data->s->trim);
 				return (1);
 			}
-			free(line_content);
+			free(data->s->line_content);
 		}
-		free(trim);
-		i++;
+		free(data->s->trim);
 	}
 	return (0);
 }

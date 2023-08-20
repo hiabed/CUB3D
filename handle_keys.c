@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:56:26 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:08:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:36:03 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	give_key(int key, t_picture *test)
 		test->m_right = 1;
 	if (key == 65307)
 	{
-		write(1, "thella ;)\n", 10);
+		write (1, "exit\n", 5);
 		exit(0);
 	}
 	return (0);

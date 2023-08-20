@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:27:12 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:24:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:32:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,13 @@ void	ft_check_errors(char *map_content, t_picture *test, char **av)
 		|| check_double_element(test->count, test->map_v2))
 	{
 		if (check_map_extantion(av[1]))
-		{
 			ft_perror("extenion Is Not Valid\n");
-		}
 		if (check_wall_text(test->count, test->map_v2))
-		{
 			ft_perror("Texture Is Not Valid\n");
-		}
 		if (check_double_element(test->count, test->map_v2))
-		{
 			ft_perror("Texture Is Duplicat\n");
-		}
 		if (check_character(test->map_v2, test->map_v3, test))
-		{
 			ft_perror("Error space around '0'\n");
-		}
 	}
 	check_new_line(map_content);
 }
@@ -78,6 +70,6 @@ void	ft_perror(char *s)
 
 int	ft_exit(void)
 {
-	write(1, "safi barka elik \n", 17);
+	write(1, "exit\n", 5);
 	exit(0);
 }

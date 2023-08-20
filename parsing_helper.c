@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 23:20:09 by mhassani          #+#    #+#             */
-/*   Updated: 2023/08/20 23:22:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:22:48 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	**fill_map_with_spaces(t_picture *data, int max)
 	while (data->map_v3 && data->map_v3[i])
 		i++;
 	str = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (data->map_v3 && data->map_v3[i])
+	i = -1;
+	while (data->map_v3 && data->map_v3[++i])
 	{
 		str[i] = malloc(max + 1);
 		j = 0;
@@ -33,12 +33,8 @@ char	**fill_map_with_spaces(t_picture *data, int max)
 			j++;
 		}
 		while (j < max && ft_strlen(data->map_v3[i]) < max)
-		{
-			str[i][j] = ' ';
-			j++;
-		}
+			str[i][j++] = ' ';
 		str[i][j] = '\0';
-		i++;
 	}
 	str[i] = NULL;
 	return (str);

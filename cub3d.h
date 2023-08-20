@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:26:07 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:21:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2147
@@ -35,8 +36,15 @@ typedef struct s_count
 	int		count4;
 	char	**a;
 	char	*trim;
-
 }			t_count;
+
+typedef struct s_digit
+{
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+}			t_digit;
 
 typedef struct s_infos
 {
@@ -48,6 +56,14 @@ typedef struct s_infos
 	int		count;
 	char	*trim;
 }			t_inf;
+
+typedef struct s_strings
+{
+	char	*trim;
+	char	*line_content;
+	char	ch;
+	char	**number;
+}	t_strings;
 
 typedef struct s_imgs
 {
@@ -66,76 +82,78 @@ typedef struct s_imgs
 
 typedef struct creat_picture
 {
-	char	*tmp;
-	char	*trim;
-	int		i;
-	int		k;
-	int		l;
-	int		j;
-	float	rad_v2;
-	t_imgs	*imgs;
-	t_inf	*inf;
-	t_count	*count;
-	int		c_color;
-	int		f_color;
-	int		start;
-	int		begin;
-	int		old_s;
-	char	dir_h;
-	char	dir_v;
-	char	*map;
-	char	**map_v3;
-	char	**map_v2;
-	float	x_p;
-	float	y_p;
-	float	angl;
-	float	r_left;
-	float	r_right;
-	float	ray_pos;
-	int		color;
-	int		wigth;
-	int		hight;
-	void	*image;
-	void	*ptr;
-	void	*wind;
-	void	*mlx;
-	int		y;
-	int		x;
-	int		len;
-	int		end;
-	float	deta;
-	float	teta_ptr;
-	int		bit_pixl;
-	void	*image_adrr;
-	char	*adrr;
-	int		m_up;
-	int		m_down;
-	int		m_left;
-	int		m_right;
-	float	speed;
-	int		move_check;
-	int		ray_distance;
-	int		player_size;
-	int		middle_ray;
-	int		wall_check;
-	int		f;
-	double	dist_p_screen;
-	double	wall_tall;
-	float	tx_hor;
-	float	ty_hor;
-	float	ray_distance_hor;
-	float	tx_ver;
-	float	ty_ver;
-	float	ray_distance_ver;
-	float	new_ray_distance;
-	float	ray_distancee;
-	float	tx;
-	float	ty;
-	char	*north_xpm;
-	char	*south_xpm;
-	char	*east_xpm;
-	char	*west_xpm;
-	char	*hold_path;
+	char		*tmp;
+	char		*trim;
+	int			i;
+	int			k;
+	int			l;
+	int			j;
+	float		rad_v2;
+	t_imgs		*imgs;
+	t_inf		*inf;
+	t_count		*count;
+	t_digit		*d;
+	t_strings	*s;
+	int			c_color;
+	int			f_color;
+	int			start;
+	int			begin;
+	int			old_s;
+	char		dir_h;
+	char		dir_v;
+	char		*map;
+	char		**map_v3;
+	char		**map_v2;
+	float		x_p;
+	float		y_p;
+	float		angl;
+	float		r_left;
+	float		r_right;
+	float		ray_pos;
+	int			color;
+	int			wigth;
+	int			hight;
+	void		*image;
+	void		*ptr;
+	void		*wind;
+	void		*mlx;
+	int			y;
+	int			x;
+	int			len;
+	int			end;
+	float		deta;
+	float		teta_ptr;
+	int			bit_pixl;
+	void		*image_adrr;
+	char		*adrr;
+	int			m_up;
+	int			m_down;
+	int			m_left;
+	int			m_right;
+	float		speed;
+	int			move_check;
+	int			ray_distance;
+	int			player_size;
+	int			middle_ray;
+	int			wall_check;
+	int			f;
+	double		dist_p_screen;
+	double		wall_tall;
+	float		tx_hor;
+	float		ty_hor;
+	float		ray_distance_hor;
+	float		tx_ver;
+	float		ty_ver;
+	float		ray_distance_ver;
+	float		new_ray_distance;
+	float		ray_distancee;
+	float		tx;
+	float		ty;
+	char		*north_xpm;
+	char		*south_xpm;
+	char		*east_xpm;
+	char		*west_xpm;
+	char		*hold_path;
 }			t_picture;
 
 void		initialize_images(t_picture *data);

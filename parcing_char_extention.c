@@ -6,18 +6,14 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:22:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:35:29 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_player_pos(char **str, t_inf *info)
+int	check_player_pos(char **str, t_inf *info, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = -1;
 	info->count = 0;
 	while (str[++i])
 	{
@@ -81,7 +77,6 @@ int	front_end_wall(char *str)
 	trim = ft_strtrim(str, " ");
 	while (trim[i])
 	{
-		printf("c == %c  \n", trim[i]);
 		if (trim[i] == ' ')
 			i++;
 		else if (trim[i] != '1')
@@ -118,7 +113,6 @@ int	check_wall(char **map)
 	while (map[i])
 		i++;
 	i--;
-	printf("%s, last = %s\n", map[0], map[i]);
 	if (front_end_wall(map[0]) || front_end_wall(map[i]))
 		return (1);
 	return (0);
@@ -131,14 +125,14 @@ int	check_character(char **s, char **s2, t_picture *data)
 
 	max = 0;
 	if (check_wall(s2))
-		ft_perror("Wall Is Not Valid\n");
-	if (check_player_pos(s, data->inf) || character(s2) || check_color(s, data)
-		|| check_text_ext(s, data))
+		ft_perror("Error\n");
+	if (check_player_pos(s, data->inf, -1, -1) || character(s2) \
+		|| check_color(s, data) || check_text_ext(s, data))
 	{
-		if (check_player_pos(s, data->inf))
+		if (check_player_pos(s, data->inf, -1, -1))
 			ft_perror("Issue In Player\n");
 		if (character(s2))
-			ft_perror("Character Is Not Valid\n");
+			ft_perror("Error\n");
 	}
 	max = longest_str(data);
 	map = fill_map_with_spaces(data, max);

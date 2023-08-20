@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:28:13 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:24:11 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:34:03 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ void	initialize_images(t_picture *data)
 			&data->imgs[3].bits, &data->imgs[3].line, &data->imgs[3].wa33);
 }
 
+void	init_move(t_picture *test)
+{
+	test->move_check = 0;
+	test->m_up = 0;
+	test->m_down = 0;
+	test->m_left = 0;
+	test->m_right = 0;
+	test->r_left = 0;
+	test->r_right = 0;
+}
+
 t_picture	*initialize_structure(int ac, char **av)
 {
 	t_picture	*test;
@@ -50,20 +61,16 @@ t_picture	*initialize_structure(int ac, char **av)
 	test = malloc(sizeof(t_picture));
 	test->inf = malloc(sizeof(t_inf));
 	test->count = malloc(sizeof(t_count));
+	test->s = malloc(sizeof(t_strings));
+	test->d = malloc(sizeof(t_digit));
 	if (ac != 2)
 		ft_perror("wrong argment\n");
 	if (!test)
 	{
-		printf("Error\n");
+		write(2, "Error\n", 6);
 		return (NULL);
 	}
-	test->move_check = 0;
-	test->m_up = 0;
-	test->m_down = 0;
-	test->m_left = 0;
-	test->m_right = 0;
-	test->r_left = 0;
-	test->r_right = 0;
+	init_move(test);
 	fd = open(av[1], O_RDONLY);
 	map_content = get_next_line(fd);
 	if (!map_content || !map_content[0] || fd < 0)
