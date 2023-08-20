@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 02:56:30 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:20:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,32 +134,79 @@ int     check_wall(char **map)
     return (0);
 }
 
-void    check_zero(t_picture *data)
+void    check_zero(t_picture *data, char **map)
 {
-    if (data->map_v3[data->k][data->l - 1] == ' ' || data->map_v3[data->k][data->l + 1] == ' ')
+    if (map[data->k][data->l - 1] == ' ' || map[data->k][data->l + 1] == ' ')
         ft_perror("ERROR\n");
-    else if (data->map_v3[data->k - 1][data->l] == ' ' || data->map_v3[data->k + 1][data->l] == ' ')
+    else if (map[data->k - 1][data->l] == ' ' || map[data->k + 1][data->l] == ' ')
         ft_perror("ERROR\n");
 }
 
-void    test(t_picture *data, char **s)
+void    test(t_picture *data, char **map)
 {
-    while (s && s[data->k])
+    data->k = 0;
+    while (map && map[data->k])
     {
         data->l = 0;
-        while (s[data->k] && s[data->k][data->l])
+        while (map[data->k] && map[data->k][data->l])
         {
-            if (s[data->k][data->l] == '0')
-                check_zero(data);
+            if (map[data->k][data->l] == '0')
+                check_zero(data, map);
             data->l++;
         }
         data->k++;
     }
+    ft_free(map);
+}
+
+int     longest_str(t_picture *data)
+{
+    int i = 0;
+    int max = 0;
+    max = ft_strlen(data->map_v3[i]);
+    while(data->map_v3 && data->map_v3[i] && ft_strlen(data->map_v3[i + 1]))
+    {
+        if (max <  ft_strlen(data->map_v3[i + 1]))
+            max = ft_strlen(data->map_v3[i + 1]);
+        i++;
+    }
+    return (max);
+}
+
+char    **fill_map_with_spaces(t_picture *data, int max)
+{
+    int i = 0;
+    int j;
+    while(data->map_v3 && data->map_v3[i])
+        i++;
+    char **str = malloc(sizeof(char *) * (i + 1));
+    i = 0;
+    while(data->map_v3 && data->map_v3[i])
+    {
+        str[i] = malloc(max + 1);
+        j = 0;
+        while(data->map_v3[i] && data->map_v3[i][j])
+        {
+            str[i][j] = data->map_v3[i][j];
+            j++;
+        }
+        while(j < max && ft_strlen(data->map_v3[i]) < max)
+        {
+            str[i][j] = ' ';
+            j++;
+        }
+        str[i][j] = '\0';
+        printf ("== %sa\n", str[i]);
+        i++;
+    }
+    str[i] = NULL;
+    return str;
 }
 
 int     check_character(char **s, char **s2, t_picture *data)
 {
-
+    int max = 0;
+    char **map;
     if (check_wall(s2))
         ft_perror("Wall Is Not Valid\n");
     if (check_player_pos(s, data->inf) || character(s2) || check_color(s, data) || check_text_ext(s, data)) // add texture handling
@@ -169,8 +216,9 @@ int     check_character(char **s, char **s2, t_picture *data)
         if (character(s2))
             ft_perror("Character Is Not Valid\n");
     }
-    data->k = 0;
-    test(data, data->map_v3);
+    max = longest_str(data);
+    map = fill_map_with_spaces(data, max);
+    test(data, map);
     return (0);
 }
     
