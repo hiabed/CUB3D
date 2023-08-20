@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:57:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:03:20 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:14:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	check_text_ext(char **map, t_picture *data)
 			check_textures(line_content, wall_pos[0], data);
 			free(line_content);
 		}
-		// free(data->tmp);
 		free(trim);
 		ft_free(wall_pos);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:04:47 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:26:07 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,10 @@ int			key_released(int key, t_picture *test);
 int			give_key(int key, t_picture *test);
 int			animate_moves(t_picture *test);
 int			ft_check_move(t_picture *data, double x, double y);
+char		**fill_map_with_spaces(t_picture *data, int max);
+int			player_space(char **map, int i, int j);
+void		check_zero(t_picture *data, char **map);
+void		test(t_picture *data, char **map);
+int			longest_str(t_picture *data);
 
 #endif

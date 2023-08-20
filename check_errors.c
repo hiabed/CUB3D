@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:27:12 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 23:03:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:24:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_new_line(char *str)
 	while (str[i])
 	{
 		if (str[i] == '1' && str[i + 1] == '1' && str[i + 2] == '1' && str[i
-			+ 3] == '1')
+				+ 3] == '1')
 			break ;
 		i++;
 	}
