@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:29:13 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/19 00:29:34 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:03:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	draw_horizontal_ray(t_picture *data, float angle)
 
 void	draw_vertical_ray(t_picture *data, float angle)
 {
-	int		i;
-	float	x;
-	float	y;
-	float	rad;
-	
+	int i;
+	float x;
+	float y;
+	float rad;
+
 	x = data->x_p;
 	y = data->y_p;
 	rad = angle * M_PI / 180;

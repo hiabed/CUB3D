@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:50:00 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 01:25:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:08:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_wall(t_picture *data, float x, float y)
 	while (data->map_v3[(int)y] && data->map_v3[(int)y][(int)i])
 		i++;
 	if (x >= i)
-		return 1;
+		return (1);
 	if (data->map_v3[(int)y][(int)x] == '1')
 	{
 		return (1);

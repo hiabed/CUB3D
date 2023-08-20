@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:45:45 by afadlane          #+#    #+#             */
-/*   Updated: 2023/07/15 08:33:05 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:01:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"cub3d.h"
+#include "cub3d.h"
 
 char	*ft_strchr(char *s, int c)
 {
@@ -45,7 +45,6 @@ size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 	return (size_src);
 }
 
-
 char	*ft_strtrim(char *s1, char *set)
 {
 	int		i;
@@ -58,7 +57,7 @@ char	*ft_strtrim(char *s1, char *set)
 	i = 0;
 	while (s1[i] != '\0' && ft_strchr(set, s1[i]))
 		i++;
-	while (i < len - 1 && ft_strchr(set, s1[len -1]))
+	while (i < len - 1 && ft_strchr(set, s1[len - 1]))
 		len--;
 	p = malloc(sizeof(char) * (len - i + 1));
 	if (!p)

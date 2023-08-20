@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 12:28:19 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/07 22:51:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:00:22 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = malloc(1);
-		s1[0]= '\0';
+		s1[0] = '\0';
 	}
 	if (!s2)
 		return (NULL);
@@ -82,11 +82,3 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (newbuf);
 }
-
-// int		main(void)
-// {
-// 	int	fd;
-
-// 	fd = open("main", O_CREAT | O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// }

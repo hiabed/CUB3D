@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:56:26 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/19 00:57:06 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:08:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int	give_key(int key, t_picture *test)
 		test->r_left = 1;
 	if (key == 65363)
 		test->r_right = 1;
-	if (key == 119) //w
+	if (key == 119)
 		test->m_up = 1;
-	if (key == 115) //s
+	if (key == 115)
 		test->m_down = 1;
-	if (key == 100) //d
+	if (key == 100)
 		test->m_left = 1;
 	if (key == 97)
 		test->m_right = 1;
-	if (key == 65307) //esc
+	if (key == 65307)
 	{
 		write(1, "thella ;)\n", 10);
 		exit(0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:39:06 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/19 18:25:01 by ayylaaba         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:12:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*get_content(char *str, char c)
 
 	i = 0;
 	i2 = 0;
-	while (str[i] && str[i] != c) // skip object (C or F)
+	while (str[i] && str[i] != c)
 		i++;
-	while (str[i] == '\t' || str[i] == ' ') // skip space
+	while (str[i] == '\t' || str[i] == ' ')
 	{
 		i++;
 		i2++;

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:27:12 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 19:40:48 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 23:03:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	check_new_line(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '1' && str[i + 1] == '1' && str[i + 2] == '1' && str[i + 3] == '1')
-			break;
+		if (str[i] == '1' && str[i + 1] == '1' && str[i + 2] == '1' && str[i
+			+ 3] == '1')
+			break ;
 		i++;
 	}
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == '\n' && str[i + 1] == '\n')
+		if (str[i] == '\n' && str[i + 1] == '\n')
 		{
-			while(str[i] == '\n')
+			while (str[i] == '\n')
 				i++;
-			if(!str[i])
+			if (!str[i])
 				return ;
 			ft_perror("there is a new line in the map\n");
 		}
@@ -45,8 +46,9 @@ void	ft_check_errors(char *map_content, t_picture *test, char **av)
 	if ((!test->map_v2 || !test->map_v2[0]))
 		ft_perror("Empty map\n");
 	test->map_v3 = test->map_v2 + 6;
-	if (check_map_extantion(av[1]) || check_character(test->map_v2, test->map_v3, test)
-		|| check_wall_text(test->count,test->map_v2) || check_double_element(test->count, test->map_v2))
+	if (check_map_extantion(av[1]) || check_character(test->map_v2,
+			test->map_v3, test) || check_wall_text(test->count, test->map_v2)
+		|| check_double_element(test->count, test->map_v2))
 	{
 		if (check_map_extantion(av[1]))
 		{
@@ -68,7 +70,7 @@ void	ft_check_errors(char *map_content, t_picture *test, char **av)
 	check_new_line(map_content);
 }
 
-void ft_perror(char *s)
+void	ft_perror(char *s)
 {
 	write(2, s, ft_strlen(s));
 	exit(1);
