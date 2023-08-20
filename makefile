@@ -6,7 +6,7 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/17 18:15:25 by mhassani         ###   ########.fr        #
+#    Updated: 2023/08/20 02:16:19 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = clang
 
 MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-CFLAGS = -fsanitize=address -g3 #-Wall -Wextra -Werror 
+CFLAGS = -fsanitize=address -g3 -Wall -Wextra -Werror 
 
 SRCS = 	main.c \
 		get_next_line.c	\
@@ -34,6 +34,14 @@ SRCS = 	main.c \
 		move_player.c \
 		intersection.c \
 		draw_texture.c \
+		draw_rays.c \
+		initializer.c \
+		check_errors.c \
+		helper.c \
+		drawing_part.c \
+		check_errors2.c \
+		handle_keys.c \
+		move_player2.c \
 
 OBJ = ${SRCS:.c=.o}
 #OBJBONUS = ${BONUS:.c=.o}

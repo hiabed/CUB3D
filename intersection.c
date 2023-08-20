@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 19:27:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/08/17 18:44:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/19 02:16:06 by ayylaaba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i)
 {
-	float	rad;
-	
-	rad = angle * M_PI / 180;
-	if (cos(rad) < 0) // player look left W
+	data->rad_v2 = angle * M_PI / 180;
+	if (cos(data->rad_v2) < 0) // player look left W
 	{
 		data->dir_v = 'W';
 		x_i = floor(data->x_p / 64) * 64;
 	}
-	if (cos(rad) > 0) // player look rhit E
+	if (cos(data->rad_v2) > 0) // player look rhit E
 	{
 		data->dir_v = 'E';
 		x_i = floor(data->x_p / 64) * 64 + 64;
 	}
-	y_i = data->y_p + (data->x_p - x_i) * tan(rad);
-	while (!is_wall(data, (x_i / 64) - (cos(rad) < 0), y_i / 64))
+	y_i = data->y_p + (data->x_p - x_i) * tan(data->rad_v2);
+	while (!is_wall(data, (x_i / 64) - (cos(data->rad_v2) < 0), y_i / 64))
 	{
-		if (cos(rad) < 0)
+		if (cos(data->rad_v2) < 0)
 			x_i -= 64;
-		if (cos(rad) > 0)
+		if (cos(data->rad_v2) > 0)
 			x_i += 64;
-		y_i = data->y_p + (data->x_p - x_i) * tan(rad);
+		y_i = data->y_p + (data->x_p - x_i) * tan(data->rad_v2);
 	}
 	data->ray_distance_ver = sqrt(pow(x_i - data->x_p, 2) + pow(y_i - data->y_p, 2));
 	data->tx_ver = x_i;
@@ -43,28 +41,26 @@ t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i)
 }
 
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i)
-{
-	float	rad;
-	
-	rad = angle * M_PI / 180;
-	if (sin(rad) > 0) // player look up N
+{	
+	data->rad_v2 = angle * M_PI / 180;
+	if (sin(data->rad_v2) > 0) // player look up N
 	{
 		data->dir_h = 'N';
 		y_i = floor(data->y_p / 64) * 64;
 	}
-	if (sin(rad) < 0) // player look down S
+	if (sin(data->rad_v2) < 0) // player look down S
 	{
 		data->dir_h = 'S';
 		y_i = floor(data->y_p / 64) * 64 + 64;
 	}
-	x_i = data->x_p + (data->y_p - y_i) / tan(rad);
-	while (!is_wall(data, x_i / 64, (y_i / 64) - (sin(rad) > 0)))
+	x_i = data->x_p + (data->y_p - y_i) / tan(data->rad_v2);
+	while (!is_wall(data, x_i / 64, (y_i / 64) - (sin(data->rad_v2) > 0)))
 	{
-		if (sin(rad) > 0)
+		if (sin(data->rad_v2) > 0)
 			y_i -= 64;
-		if (sin(rad) < 0)
+		if (sin(data->rad_v2) < 0)
 			y_i += 64;
-		x_i = data->x_p + (data->y_p - y_i) / tan(rad);
+		x_i = data->x_p + (data->y_p - y_i) / tan(data->rad_v2);
 	}
 	data->ray_distance_hor = sqrt(pow(x_i - data->x_p, 2) + pow(y_i - data->y_p, 2));
 	data->tx_hor = x_i;

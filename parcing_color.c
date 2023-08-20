@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayylaaba <ayylaaba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 11:18:47 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 17:45:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/19 16:46:25 by ayylaaba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,23 @@ int     check_number(char *str, char ch, t_picture *data)
 
     number = ft_split(str, ',');
     if (!ft_isdigit(number[0]) || !ft_isdigit(number[1]) || !ft_isdigit(number[2]))
+    {
+        ft_free(number);
         ft_perror("Is Not Valid RGB\n");
+    }
     if (ft_atoi(number[0]) < 0 || ft_atoi(number[1]) < 0 || ft_atoi(number[2]) < 0)
+    {
+        ft_free(number);   
         ft_perror("Is Not Valid RGB\n");
+    }
     while (i < 3)
     {
         if (!(ft_atoi(number[i]) >= 0 && ft_atoi(number[i]) <= 255) 
-            && (ft_atoi(number[i]) > INT_MAX))
-            ft_perror("Is Not Valid RGB\n");
+            || (ft_atoi(number[i]) > INT_MAX))
+            {
+                ft_free(number);
+                ft_perror("Is Not Valid RGB\n");
+            }
         i++;
     }
     if (ch == 'C')
@@ -63,6 +72,7 @@ int     check_number(char *str, char ch, t_picture *data)
     ft_free(number);
     return (0);
 }
+
 int     comma(char *str)
 {
     int     i;
@@ -99,9 +109,17 @@ int     check_color(char **map, t_picture *data)
             ch = trim[0];
             line_content = get_content(trim, ' ');
             if (comma(line_content))
+            {
+                free(line_content);
+                free(trim);
                 ft_perror ("more than comma in RGB\n");  
+            }
             if (check_number(line_content, ch, data))
+            {
+                free(line_content);
+                free(trim);
                 return (1);
+            }
             free(line_content);
         }
         free(trim);

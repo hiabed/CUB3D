@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 19:04:51 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/18 23:09:37 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 02:22:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,31 @@
 #  define BUFFER_SIZE 2147
 # endif
 
-typedef struct creat_data
+typedef struct s_count
 {
-	// int         x;
-	// int         y;
-	// int         color;
-	// int         wigth;
-	// int         hight;
-	// void        *image;
-}			t_data;
+	int     i;
+    int     count;
+    int     count1;
+    int     count2;
+    int     count3;
+    int     count4;
+    char    **a;
+    char    *trim;
+	
+} t_count;
+
+
+
+typedef struct s_infos
+{
+	double	rad;
+	double	x;
+	double	y;
+	double	angle;
+	double	cur_angl;
+	int		count;
+	char	*trim;
+}	t_inf;
 
 typedef struct s_imgs
 {
@@ -44,17 +60,29 @@ typedef struct s_imgs
 	int		line;
 	int		bits;
 	int		wa33;
+	int 	end;
+	int 	x;
+	float 	y;
+	float 	grid;
 }	t_imgs;
 
 typedef struct creat_picture
 {
+	char *tmp;
+	    char    *trim;
+	int		i;
+	int		k;
+	int		l;
+	int		j;
+	float	rad_v2;
 	t_imgs	*imgs;
+	t_inf 	*inf;
+	t_count *count;
 	int c_color;
 	int f_color;
 	int		start;
 	int		begin;
 	int		old_s;
-	t_data	*data;
 	char	dir_h;
 	char	dir_v;
 	char	*map;
@@ -112,8 +140,8 @@ typedef struct creat_picture
 	char 	*hold_path;
 }			t_picture;
 
-int check_text_ext(char **map, t_picture *data);
-void		init(t_picture *data);
+void		initialize_images(t_picture *data);
+int 		check_text_ext(char **map, t_picture *data);
 void		my_put_pixl(t_picture *test, int x, int y, int color);
 void		draw_walls(t_picture *data);
 void		draw_wall(t_picture * data, t_imgs *imgs, int s);
@@ -133,11 +161,10 @@ char		*ft_strrchr(char *s, int c);
 void 		ft_perror(char *s);
 int			check_map_extantion(char *map);
 int			character(char **map);
-int			check_double_element(char **map);
-int			check_wall_text(char **src);
+int    		check_double_element(t_count *c, char **map);
+int			check_wall_text(t_count *c, char **src);
 int     	check_character(char **s, char **s2, t_picture *data);
 int     	check_number(char *str, char ch, t_picture *data);
-char		*get_content(char *str, char c);
 void		move_up(t_picture *data);
 void		move_down(t_picture *data);
 void		move_right(t_picture *data);
@@ -146,5 +173,22 @@ t_picture	*ver_int(t_picture *data, float angle, float x_i, float y_i);
 t_picture	*hor_int(t_picture *data, float angle, float x_i, float y_i);
 int     	check_color(char **map, t_picture *data);
 char	**ft_free(char **s);
+void	draw_horizontal_ray(t_picture *data, float angle);
+void	draw_vertical_ray(t_picture *data, float angle);
+t_picture	*initialize_structure(int ac, char **av);
+void	initialize_the_angle_of_player(t_picture *test);
+void	ft_check_errors(char *map_content, t_picture *test, char **av);
+void ft_perror(char *s);
+int	ft_exit(void);
+void	check_new_line(char *str);
+void	put_player(t_picture *test, int color);
+void	draw_map(char **map, t_picture *test);
+char	*get_content(char *str, char c);
+int	check_textures(char *line_content, char *wall_pos, t_picture *data);
+void	draw_squar(t_picture *test, int old_x, int old_y, int color);
+int	key_released(int key, t_picture *test);
+int	give_key(int key, t_picture *test);
+int	animate_moves(t_picture *test);
+int ft_check_move(t_picture *data ,double x, double y);
 
 #endif
