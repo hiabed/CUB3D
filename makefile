@@ -6,7 +6,7 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 19:02:08 by ayylaaba          #+#    #+#              #
-#    Updated: 2023/08/20 02:16:19 by mhassani         ###   ########.fr        #
+#    Updated: 2023/08/20 19:23:35 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = clang
 
 MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-CFLAGS = -fsanitize=address -g3 -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 SRCS = 	main.c \
 		get_next_line.c	\

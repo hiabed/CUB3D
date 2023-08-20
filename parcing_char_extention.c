@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 16:41:59 by ayylaaba          #+#    #+#             */
-/*   Updated: 2023/08/20 17:20:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:25:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int     check_wall(char **map)
     j = 0;
     i = 0;
     
-    while (map[j]) // wall first and last char
+    while (map && map[j]) // wall first and last char
     {
         trim = ft_strtrim(map[j], " ");
         if (trim[0] != '1' || trim[ft_strlen(trim) - 1] != '1')
@@ -196,7 +196,6 @@ char    **fill_map_with_spaces(t_picture *data, int max)
             j++;
         }
         str[i][j] = '\0';
-        printf ("== %sa\n", str[i]);
         i++;
     }
     str[i] = NULL;
